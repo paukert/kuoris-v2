@@ -12,18 +12,22 @@ services:
     restart: unless-stopped
     volumes:
       - php_socket:/var/run/php
+      - ./docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker/php/conf.d/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
     healthcheck:
       interval: 10s
       timeout: 3s
       retries: 3
       start_period: 30s
     environment:
-      # Run "composer require symfony/orm-pack" to install and configure Doctrine ORM
-      DATABASE_URL: mysql://kuoris:kuoris@database:3306/kuoris?serverVersion=mariadb-10.7.1&charset=utf8mb4
       # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
       MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      PHP_IDE_CONFIG: serverName=symfony
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
 
   caddy:
     build:
@@ -60,6 +64,7 @@ services:
 
   database:
     image: mariadb:10.7.1
+    restart: unless-stopped
     environment:
       MARIADB_ROOT_PASSWORD: password
       MARIADB_DATABASE: kuoris
@@ -72,9 +77,9 @@ services:
 
   adminer:
     image: adminer:latest
+    restart: unless-stopped
     depends_on:
       - database
-    restart: always
     environment:
       ADMINER_DEFAULT_SERVER: database
     ports:

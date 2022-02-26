@@ -102,7 +102,7 @@
         "version": "2.0.3"
     },
     "phar-io/version": {
-        "version": "3.1.1"
+        "version": "3.2.1"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -117,7 +117,7 @@
         "version": "v1.15.0"
     },
     "phpunit/php-code-coverage": {
-        "version": "9.2.11"
+        "version": "9.2.13"
     },
     "phpunit/php-file-iterator": {
         "version": "3.0.6"
