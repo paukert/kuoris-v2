@@ -75,14 +75,18 @@ class AppFixtures extends Fixture
         );
 
         // Add entries
-        EntryFactory::createMany(
-            30,
-            fn() => [
-                'category' => CategoryFactory::random(),
-                'event' => faker()->boolean() ? RaceFactory::random() : TrainingFactory::random(),
-                'member' => MemberFactory::random(),
-            ]
-        );
+        foreach (MemberFactory::all() as $member) {
+            $events = array_merge(RaceFactory::all(), TrainingFactory::all());
+            shuffle($events);
+            $memberEntriesCount = faker()->numberBetween(0, count($events) / 2);
+            for ($i = 0; $i < $memberEntriesCount; $i++) {
+                EntryFactory::createOne([
+                    'category' => CategoryFactory::random(),
+                    'event' => array_shift($events),
+                    'member' => $member,
+                ]);
+            }
+        }
 
         $manager->flush();
     }

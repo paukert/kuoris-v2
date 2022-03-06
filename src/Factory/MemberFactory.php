@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Member;
 use App\Repository\MemberRepository;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -28,10 +29,12 @@ use Zenstruck\Foundry\Proxy;
  */
 final class MemberFactory extends ModelFactory
 {
-    public function __construct()
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         parent::__construct();
-        // TODO inject services if required (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services)
+        $this->passwordHasher = $passwordHasher;
     }
 
     protected function getDefaults(): array
@@ -39,7 +42,6 @@ final class MemberFactory extends ModelFactory
         return [
             'registration' => self::faker()->regexify('KUO\d{4}'),
             'roles' => [],
-            'password' => self::faker()->password(),
             'firstName' => self::faker()->firstName(),
             'lastName' => self::faker()->lastName(),
             'mail' => self::faker()->safeEmail(),
@@ -53,8 +55,9 @@ final class MemberFactory extends ModelFactory
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
         return $this
-            // ->afterInstantiate(function(Member $member): void {})
-            ;
+            ->afterInstantiate(function (Member $member): void {
+                $member->setPassword($this->passwordHasher->hashPassword($member, $member->getRegistration()));
+            });
     }
 
     protected static function getClass(): string
