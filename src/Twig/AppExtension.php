@@ -49,9 +49,9 @@ class AppExtension extends AbstractExtension
         $now = new DateTime();
         $formattedDate = $date->format('d. m. Y H:i:s');
         if ($date > $now && $date < $now->modify('+3 days')) {
-            return '<td class="table-danger">' . $formattedDate . '</td>';
+            return '<td class="table-danger d-none d-sm-table-cell">' . $formattedDate . '</td>';
         }
-        return '<td>' . $formattedDate . '</td>';
+        return '<td class="d-none d-sm-table-cell">' . $formattedDate . '</td>';
     }
 
     public function getMemberEntryStatus(Event $event, Member $member): string

@@ -3,6 +3,12 @@ header {
 }
 
 main {
-    width: 70vw;
+    max-width: 1400px;
+    width: 90vw;
     margin: 0 auto;
+}
+
+.table-danger {
+    --bs-table-bg: #ff4010;
+    --bs-table-striped-bg: #ff4010;
 }

@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Přehled{% endblock %}
+
+{% block content %}
+    {% include 'event/_table.html.twig' with {
+        'events': races,
+        'caption': 'Závody s nejbližší uzávěrkou přihlášek'
+    } only %}
+    {% include 'event/_table.html.twig' with {
+        'events': trainings,
+        'caption': 'Tréninky s nejbližší uzávěrkou přihlášek'
+    } only %}
+{% endblock %}

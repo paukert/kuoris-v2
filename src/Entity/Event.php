@@ -203,6 +203,11 @@ class Event
         return $this;
     }
 
+    public function getEntriesCount(): int
+    {
+        return $this->entries->count();
+    }
+
     /**
      * @return Collection<int, Comment>
      */
