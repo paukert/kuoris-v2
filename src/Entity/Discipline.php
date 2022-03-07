@@ -21,6 +21,9 @@ class Discipline
     #[ORM\OneToMany(mappedBy: 'discipline', targetEntity: Event::class)]
     private $events;
 
+    #[ORM\Column(type: 'string', length: 10)]
+    private $abbr;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -69,6 +72,18 @@ class Discipline
                 $event->setDiscipline(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAbbr(): ?string
+    {
+        return $this->abbr;
+    }
+
+    public function setAbbr(string $abbr): self
+    {
+        $this->abbr = $abbr;
 
         return $this;
     }

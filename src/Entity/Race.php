@@ -22,6 +22,10 @@ class Race extends Event
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'races')]
     private $competitions;
 
+    #[ORM\ManyToOne(targetEntity: Level::class, inversedBy: 'races')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $level;
+
     public function __construct()
     {
         parent::__construct();
@@ -87,6 +91,18 @@ class Race extends Event
         if ($this->competitions->removeElement($competition)) {
             $competition->removeRace($this);
         }
+
+        return $this;
+    }
+
+    public function getLevel(): ?Level
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?Level $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }

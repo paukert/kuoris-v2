@@ -8,6 +8,7 @@ use App\Factory\CommentFactory;
 use App\Factory\CompetitionFactory;
 use App\Factory\DisciplineFactory;
 use App\Factory\EntryFactory;
+use App\Factory\LevelFactory;
 use App\Factory\MemberFactory;
 use App\Factory\OrganizerFactory;
 use App\Factory\RaceFactory;
@@ -22,7 +23,10 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // Add disciplines
-        DisciplineFactory::createMany(5);
+        DisciplineFactory::createMany(4);
+
+        // Add levels
+        LevelFactory::createMany(6);
 
         // Add organizers
         OrganizerFactory::createMany(5);
@@ -41,6 +45,7 @@ class AppFixtures extends Fixture
                 'competitions' => CompetitionFactory::randomRange(1, 3),
                 'discipline' => DisciplineFactory::random(),
                 'organizers' => OrganizerFactory::randomRange(1, 2),
+                'level' => LevelFactory::random(),
             ]
         );
 

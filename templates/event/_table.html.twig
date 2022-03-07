@@ -5,7 +5,9 @@
         <tr>
             <th scope="col">Datum</th>
             <th scope="col">Název</th>
-            <th scope="col" class="d-none d-md-table-cell">Typ</th>
+            {% if events[0].level is defined %}
+                <th scope="col" class="d-none d-md-table-cell">Typ</th>
+            {% endif %}
             <th scope="col" class="d-none d-sm-table-cell">Uzávěrka přihlášek</th>
             <th scope="col" class="d-none d-lg-table-cell">Účast</th>
             <th scope="col" class="d-none d-md-table-cell">Stav</th>
@@ -16,7 +18,9 @@
             <tr>
                 <td>{{ event.date | date('d. m. Y') }}</td>
                 <td><a href="{{ path('event_detail', { id: event.id }) }}">{{ event.name | u.truncate(30, '...') }}</a></td>
-                <td class="d-none d-md-table-cell">MČR</td>
+                {% if event.level is defined %}
+                    <td class="d-none d-md-table-cell">{{ event.level.abbr }}</td>
+                {% endif %}
                 {{ event.entryDeadline | deadline | raw }}
                 <td class="d-none d-lg-table-cell">{{ event.entriesCount | attendance }}</td>
                 <td class="d-none d-md-table-cell">{{ memberEntryStatus(event, app.user) }}</td>

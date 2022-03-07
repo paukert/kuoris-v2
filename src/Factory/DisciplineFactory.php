@@ -36,10 +36,18 @@ final class DisciplineFactory extends ModelFactory
 
     protected function getDefaults(): array
     {
-        $disciplines = ['Sprint', 'Krátká trať', 'Klasická trať', 'Dlouhá trať', 'Štafety'];
+        $disciplines = [
+            ['SP', 'Sprint'],
+            ['KT', 'Krátká trať'],
+            ['KL', 'Klasická trať'],
+            ['ST', 'Štafety'],
+        ];
+
+        $discipline = self::faker()->unique()->randomElement($disciplines);
 
         return [
-            'name' => self::faker()->unique()->randomElement($disciplines),
+            'name' => $discipline[1],
+            'abbr' => $discipline[0],
         ];
     }
 
