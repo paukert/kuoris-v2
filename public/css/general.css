@@ -12,3 +12,22 @@ main {
     --bs-table-bg: #ff4010;
     --bs-table-striped-bg: #ff4010;
 }
+
+table td ul {
+    list-style-type: none;
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.2rem;
+}
+
+table td ul span.title {
+    display: inline-block;
+    min-width: 110px;
+}
+
+table td.date {
+    min-width: 125px;
+}
+
+.nearDeadline {
+    color: #ff4010;
+}

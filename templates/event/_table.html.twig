@@ -15,15 +15,15 @@
         </thead>
         <tbody>
         {% for event in events %}
-            <tr>
-                <td>{{ event.date | date('d. m. Y') }}</td>
+            <tr data-collapsed="true">
+                <td class="date"><span class="arrow fa-solid fa-angle-down"></span>{{ event.date | date('d. m. Y') }}</td>
                 <td><a href="{{ path('event_detail', { id: event.id }) }}">{{ event.name | u.truncate(30, '...') }}</a></td>
                 {% if event.level is defined %}
-                    <td class="d-none d-md-table-cell">{{ event.level.abbr }}</td>
+                    <td class="level d-none d-md-table-cell">{{ event.level.abbr }}</td>
                 {% endif %}
                 {{ event.entryDeadline | deadline | raw }}
-                <td class="d-none d-lg-table-cell">{{ event.entriesCount | attendance }}</td>
-                <td class="d-none d-md-table-cell">{{ memberEntryStatus(event, app.user) }}</td>
+                <td class="attendance d-none d-lg-table-cell">{{ event.entriesCount | attendance }}</td>
+                <td class="entry-status d-none d-md-table-cell">{{ memberEntryStatus(event, app.user) }}</td>
             </tr>
         {% endfor %}
         </tbody>
