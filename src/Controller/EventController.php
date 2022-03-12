@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\Race;
+use App\Entity\Training;
 use App\Service\EventService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +29,7 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/races', name: 'race_list')]
+    #[Route('/races', name: 'list_races')]
     public function listRaces(PaginatorInterface $paginator, Request $request): Response
     {
         $hint = $request->query->get('hint');
@@ -41,6 +42,23 @@ class EventController extends AbstractController
 
         return $this->render('event/list.html.twig', [
             'title' => 'Závody',
+            'pagination' => $pagination,
+        ]);
+    }
+
+    #[Route('/trainings', name: 'list_trainings')]
+    public function listTrainings(PaginatorInterface $paginator, Request $request): Response
+    {
+        $hint = $request->query->get('hint');
+        $excludePastEvents = !$request->query->getBoolean('includePastEvents', false);
+
+        $pagination = $paginator->paginate(
+            $this->eventService->getEventsQuery($hint, $excludePastEvents, Training::class),
+            $request->query->getInt('page', 1)
+        );
+
+        return $this->render('event/list.html.twig', [
+            'title' => 'Tréninky',
             'pagination' => $pagination,
         ]);
     }

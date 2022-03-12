@@ -3,14 +3,14 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <form method="GET" action="{{ path('race_list') }}" class="row g-3 mb-3">
+    <form method="GET" action="{{ path(app.request.attributes.get('_route')) }}" class="row g-3 mb-3">
         <div class="col-sm-6">
             <input class="form-control" type="search" name="hint" placeholder="Vyhledávat podle názvu" aria-label="Název závodu"/>
         </div>
         <div class="col-sm">
             <div class="input-group-text">
                 <input class="form-check-input mt-0" type="checkbox" value="true" id="includePastEvents" name="includePastEvents"/>
-                <label class="form-check-label" for="includePastEvents">Zobrazit staré události</label>
+                <label class="form-check-label" for="includePastEvents">Zobrazit staré {{ title | lower }}</label>
             </div>
         </div>
         <div class="col-sm">

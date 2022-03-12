@@ -30,13 +30,13 @@
                 <ul class="navbar-nav">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Hlavní stránka</a>
+                            <a class="nav-link active" aria-current="page" href="{{ path('app_homepage') }}">Hlavní stránka</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('race_list') }}">Závody</a>
+                            <a class="nav-link" href="{{ path('list_races') }}">Závody</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Tréninky</a>
+                            <a class="nav-link" href="{{ path('list_trainings') }}">Tréninky</a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
