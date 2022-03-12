@@ -19,7 +19,7 @@
                 <td class="date"><span class="arrow fa-solid fa-angle-down"></span>{{ event.date | date('d. m. Y') }}</td>
                 <td><a href="{{ path('event_detail', { id: event.id }) }}">{{ event.name | u.truncate(30, '...') }}</a></td>
                 {% if event.level is defined %}
-                    <td class="level d-none d-md-table-cell">{{ event.level.abbr }}</td>
+                    <td class="level d-none d-md-table-cell"><abbr title="{{ event.level.name }}">{{ event.level.abbr }}</abbr></td>
                 {% endif %}
                 {{ event.entryDeadline | deadline | raw }}
                 <td class="attendance d-none d-lg-table-cell">{{ event.entriesCount | attendance }}</td>

@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
 
         // Add races
         RaceFactory::createMany(
-            20,
+            100,
             fn() => [
                 'categories' => CategoryFactory::randomRange(15, 25),
                 'competitions' => CompetitionFactory::randomRange(1, 3),
@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
 
         // Add trainings
         TrainingFactory::createMany(
-            10,
+            100,
             fn() => [
                 'categories' => CategoryFactory::randomRange(15, 25),
                 'discipline' => DisciplineFactory::random(),

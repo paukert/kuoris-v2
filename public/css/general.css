@@ -8,6 +8,7 @@ main {
     margin: 0 auto;
 }
 
+/* Tables */
 .table-danger {
     --bs-table-bg: #ff4010;
     --bs-table-striped-bg: #ff4010;
@@ -31,3 +32,22 @@ table td.date {
 .nearDeadline {
     color: #ff4010;
 }
+/* End - Tables */
+
+/* Pagination */
+.navigation ul {
+    justify-content: center !important;
+}
+
+@media screen and (max-width: 425px) {
+    .navigation ul {
+        font-size: small;
+    }
+}
+/* End - Pagination */
+
+/* Other */
+.mt-0 {
+    margin-right: 0.5rem;
+}
+/* End - Other */

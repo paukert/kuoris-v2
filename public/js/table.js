@@ -20,20 +20,18 @@ function collapseRow(row) {
 }
 
 const rows = Array.from(document.getElementsByTagName('tr'));
-for (let i = 0; i < rows.length; i++) {
-    rows[i].firstElementChild.addEventListener('click', () => processAction(rows[i]));
-}
+rows.forEach(row => row.firstElementChild.addEventListener('click', () => processAction(row)));
 
 window.addEventListener('resize', function () {
     if (window.innerWidth < 992) {
         return;
     }
 
-    for (let i = 0; i < rows.length; i++) {
-        if (rows[i].dataset.collapsed === 'false') {
-            collapseRow(rows[i]);
+    rows.forEach(row => {
+        if (row.dataset.collapsed === 'false') {
+            collapseRow(row);
         }
-    }
+    });
 });
 
 function getRowContent(row) {

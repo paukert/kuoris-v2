@@ -1,0 +1,34 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <form method="GET" action="{{ path('race_list') }}" class="row g-3 mb-3">
+        <div class="col-sm-6">
+            <input class="form-control" type="search" name="hint" placeholder="Vyhledávat podle názvu" aria-label="Název závodu"/>
+        </div>
+        <div class="col-sm">
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" value="true" id="includePastEvents" name="includePastEvents"/>
+                <label class="form-check-label" for="includePastEvents">Zobrazit staré události</label>
+            </div>
+        </div>
+        <div class="col-sm">
+            <button class="form-control btn btn-primary" type="submit">Hledat</button>
+        </div>
+    </form>
+
+    {% include 'event/_table.html.twig' with {
+        'events': pagination,
+        'caption': title
+    } only %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('js/table.js') }}" defer></script>
+    <script src="{{ asset('js/utility.js') }}" defer></script>
+{% endblock %}

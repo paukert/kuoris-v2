@@ -6,6 +6,7 @@
     src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype");
 }
 
+.fa,
 .fas,
 .fa-solid {
     font-family: 'Font Awesome 6 Free';
@@ -33,4 +34,16 @@
     .arrow {
         display: none;
     }
+}
+
+.fa-sort-down::before {
+    content: "\f0dd";
+}
+
+.fa-sort-up::before {
+    content: "\f0de";
+}
+
+.fa-sort::before {
+    content: "\f0dc";
 }
