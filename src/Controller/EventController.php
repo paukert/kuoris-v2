@@ -43,6 +43,8 @@ class EventController extends AbstractController
         return $this->render('event/list.html.twig', [
             'title' => 'Závody',
             'pagination' => $pagination,
+            'excludePastEvents' => $excludePastEvents,
+            'hint' => $hint,
         ]);
     }
 
@@ -60,6 +62,8 @@ class EventController extends AbstractController
         return $this->render('event/list.html.twig', [
             'title' => 'Tréninky',
             'pagination' => $pagination,
+            'excludePastEvents' => $excludePastEvents,
+            'hint' => $hint,
         ]);
     }
 }

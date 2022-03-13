@@ -3,14 +3,26 @@
 {% block title %}Přehled{% endblock %}
 
 {% block content %}
-    {% include 'event/_table.html.twig' with {
-        'events': races,
-        'caption': 'Závody s nejbližší uzávěrkou přihlášek'
-    } only %}
-    {% include 'event/_table.html.twig' with {
-        'events': trainings,
-        'caption': 'Tréninky s nejbližší uzávěrkou přihlášek'
-    } only %}
+    {% if races is empty and trainings is empty %}
+        <p class="no-events">V&nbsp;systému není evidovaný žádný závod ani&nbsp;trénink s&nbsp;nadcházejícím datem uzávěrky přihlášek</p>
+    {% else %}
+        {% if races is empty %}
+            <p class="no-events">V&nbsp;systému není evidovaný žádný závod s&nbsp;nadcházejícím datem uzávěrky přihlášek</p>
+        {% else %}
+            {% include 'event/_table.html.twig' with {
+                'events': races,
+                'caption': 'Závody s nejbližší uzávěrkou přihlášek'
+            } only %}
+        {% endif %}
+        {% if trainings is empty %}
+            <p class="no-events">V&nbsp;systému není evidovaný žádný trénink s&nbsp;nadcházejícím datem uzávěrky přihlášek</p>
+        {% else %}
+            {% include 'event/_table.html.twig' with {
+                'events': trainings,
+                'caption': 'Tréninky s nejbližší uzávěrkou přihlášek'
+            } only %}
+        {% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

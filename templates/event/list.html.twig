@@ -5,7 +5,7 @@
 {% block content %}
     <form method="GET" action="{{ path(app.request.attributes.get('_route')) }}" class="row g-3 mb-3">
         <div class="col-sm-6">
-            <input class="form-control" type="search" name="hint" placeholder="Vyhledávat podle názvu" aria-label="Název závodu"/>
+            <input class="form-control" type="search" name="hint" placeholder="Vyhledávat podle názvu" aria-label="Název události"/>
         </div>
         <div class="col-sm">
             <div class="input-group-text">
@@ -18,10 +18,21 @@
         </div>
     </form>
 
-    {% include 'event/_table.html.twig' with {
-        'events': pagination,
-        'caption': title
-    } only %}
+    <p>Nastavení filtru:
+        {{ 'všechny ' ~ (excludePastEvents ? 'nadcházející ' : '') ~ title | lower }}
+        {% if hint %}
+            {{ ' s názvem obsahující „' ~ hint ~ '“' }}
+        {% endif %}
+    </p>
+
+    {% if pagination is empty %}
+        <p class="no-events">Nebyly nalezeny žádné {{ title | lower }} odpovídající zadanému filtru &#128533;</p>
+    {% else %}
+        {% include 'event/_table.html.twig' with {
+            'events': pagination,
+            'caption': title
+        } only %}
+    {% endif %}
 
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
