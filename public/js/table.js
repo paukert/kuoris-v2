@@ -22,7 +22,7 @@ function collapseRow(row) {
 const rows = Array.from(document.getElementsByTagName('tr'));
 rows.forEach(row => row.firstElementChild.addEventListener('click', () => processAction(row)));
 
-window.addEventListener('resize', function () {
+window.addEventListener('resize', () => {
     if (window.innerWidth < 992) {
         return;
     }
