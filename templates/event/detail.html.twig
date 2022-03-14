@@ -1,7 +1,98 @@
 {% extends 'layout.html.twig' %}
 
+{% set isRace = event.level is defined %}
+
 {% block title %}{{ event.name }}{% endblock %}
 
 {% block content %}
-    {{ event.name }}
+    <h1>{{ event.name }}</h1>
+    <h2>Informace:</h2>
+    <hr>
+    {% if isRace %}
+        <div class="row mb-2">
+            <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Typ:</span>
+            <span class="col-md">{{ event.level.name }}</span>
+        </div>
+    {% endif %}
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Datum:</span>
+        <span class="col-md">{{ event.date | date('d. m. Y') }}</span>
+    </div>
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Místo:</span>
+        <span class="col-md">{{ event.location }}</span>
+    </div>
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Start 00:</span>
+        <span class="col-md">{{ event.date | date('H:i:s') }}</span>
+    </div>
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Pořadatel:</span>
+        <span class="col-md">
+            {% for organizer in event.organizers %}
+                {{ organizer.name }}{{ not loop.last ? "," }}
+            {% endfor %}
+        </span>
+    </div>
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Disciplína:</span>
+        <span class="col-md">{{ event.discipline.name }}</span>
+    </div>
+    {% if isRace %}
+        <div class="row mb-2">
+            {# TODO: co kdyz neni vyplneno, ale existuje ORIS ID - upreveni metody getWebsite()? #}
+            <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Stránka závodu:</span>
+            <span class="col-md"><a href="{{ event.website }}" target="_blank">{{ event.website }}</a></span>
+        </div>
+    {% endif %}
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Další informace:</span>
+        <span class="col-md">{{ event.description }}</span>
+    </div>
+
+    <h2>Kategorie:</h2>
+    <hr>
+    {% for category in event.categories %}
+        {{ category.name }}{{ not loop.last ? "," }}
+    {% endfor %}
+
+    <h2>Přihlášky:</h2>
+    <hr>
+    <div class="row mb-2">
+        {# TODO: zvyrazneni brzkeho deadline prihlasek #}
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Uzávěrka přihlášek:</span>
+        <span class="col-md">{{ event.entryDeadline | date('d. m. Y H:i:s') }}</span>
+    </div>
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Stav:</span>
+        <span class="col-md">{{ memberEntryStatus(event, app.user) }}</span>
+    </div>
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Přihlášeni:</span>
+        <span class="col-md">
+            {% if event.entries is empty %}
+                Na tuto událost zatím není nikdo přihlášený
+            {% else %}
+                {% for entry in event.entries %}
+                    {{ entry.member.name }}{{ not loop.last ? "," }}
+                {% endfor %}
+            {% endif %}
+        </span>
+    </div>
+    <div class="row mb-2">
+        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Řidiči:</span>
+        <span class="col-md">
+            {% if event.entriesWithDrivers is empty %}
+                Na tuto událost zatím nemůže nikdo vzít auto
+            {% else %}
+                {% for entry in event.entriesWithDrivers %}
+                    {{ entry.member.name }}{{ not loop.last ? "," }}
+                {% endfor %}
+            {% endif %}
+        </span>
+    </div>
+
+    <h2>Komentáře:</h2>
+    <hr>
+
 {% endblock %}

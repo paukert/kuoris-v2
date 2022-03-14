@@ -325,4 +325,12 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getName(): ?string
+    {
+        if ($this->getFirstName() && $this->getLastName()) {
+            return $this->getFirstName() . ' ' . $this->getLastName();
+        }
+        return null;
+    }
 }

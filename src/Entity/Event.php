@@ -261,4 +261,12 @@ class Event
 
         return $this;
     }
+
+    /**
+     * @return Entry[]
+     */
+    public function getEntriesWithDrivers(): array
+    {
+        return array_filter($this->getEntries()->toArray(), fn(Entry $entry) => $entry->getCar());
+    }
 }
