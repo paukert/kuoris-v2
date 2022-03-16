@@ -50,7 +50,7 @@ function getRowContent(row) {
                 }
                 <li class="d-sm-none">
                     <span class="title">Přihlášky do:</span>
-                    ${nearDeadline ? `<span class="nearDeadline">${deadline.innerText}</span>` : deadline.innerText}
+                    ${nearDeadline ? `<span class="near-deadline">${deadline.innerText}</span>` : deadline.innerText}
                 </li>
                 <li class="d-lg-none">
                     <span class="title">Účast:</span>

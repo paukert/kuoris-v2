@@ -60,6 +60,7 @@ class AppFixtures extends Fixture
         );
 
         // Add members
+        MemberFactory::createOne(['registration' => 'KUO9801', 'isActive' => true]);
         MemberFactory::createMany(20);
 
         // Add announcements

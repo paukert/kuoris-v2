@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: RaceRepository::class)]
 class Race extends Event
 {
+    private const ORIS_EVENT_URL = 'https://oris.orientacnisporty.cz/Zavod?id=';
+
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orisId;
 
@@ -58,6 +60,9 @@ class Race extends Event
 
     public function getWebsite(): ?string
     {
+        if (!$this->website && $this->orisId) {
+            return self::ORIS_EVENT_URL . $this->orisId;
+        }
         return $this->website;
     }
 

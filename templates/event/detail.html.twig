@@ -38,30 +38,34 @@
         <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Disciplína:</span>
         <span class="col-md">{{ event.discipline.name }}</span>
     </div>
-    {% if isRace %}
+    {% if isRace and event.website is not empty %}
         <div class="row mb-2">
-            {# TODO: co kdyz neni vyplneno, ale existuje ORIS ID - upreveni metody getWebsite()? #}
             <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Stránka závodu:</span>
             <span class="col-md"><a href="{{ event.website }}" target="_blank">{{ event.website }}</a></span>
         </div>
     {% endif %}
-    <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Další informace:</span>
-        <span class="col-md">{{ event.description }}</span>
-    </div>
+    {% if event.description is not empty %}
+        <div class="row mb-2">
+            <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Další informace:</span>
+            <span class="col-md">{{ event.description }}</span>
+        </div>
+    {% endif %}
 
     <h2>Kategorie:</h2>
     <hr>
-    {% for category in event.categories %}
-        {{ category.name }}{{ not loop.last ? "," }}
-    {% endfor %}
+    {% if event.categories is empty %}
+        Kategorie zatím nebyly v systému definované
+    {% else %}
+        {% for category in event.categories %}
+            {{ category.name }}{{ not loop.last ? "," }}
+        {% endfor %}
+    {% endif %}
 
     <h2>Přihlášky:</h2>
     <hr>
     <div class="row mb-2">
-        {# TODO: zvyrazneni brzkeho deadline prihlasek #}
         <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Uzávěrka přihlášek:</span>
-        <span class="col-md">{{ event.entryDeadline | date('d. m. Y H:i:s') }}</span>
+        <span class="col-md">{{ event.entryDeadline | deadline(false) | raw }}</span>
     </div>
     <div class="row mb-2">
         <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Stav:</span>

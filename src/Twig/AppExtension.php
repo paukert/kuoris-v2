@@ -44,14 +44,19 @@ class AppExtension extends AbstractExtension
         return '1 závodník';
     }
 
-    public function getFormattedDeadline(DateTime $date): string
+    public function getFormattedDeadline(DateTime $date, bool $formatAsCell = true): string
     {
         $now = new DateTime();
         $formattedDate = $date->format('d. m. Y H:i:s');
         if ($date > $now && $date < $now->modify('+3 days')) {
-            return '<td class="deadline table-danger d-none d-sm-table-cell">' . $formattedDate . '</td>';
+            if ($formatAsCell) {
+                return '<td class="deadline table-danger d-none d-sm-table-cell">' . $formattedDate . '</td>';
+            } else {
+                return '<span class="near-deadline">' . $formattedDate . '</span>';
+            }
         }
-        return '<td class="deadline d-none d-sm-table-cell">' . $formattedDate . '</td>';
+
+        return $formatAsCell ? '<td class="deadline d-none d-sm-table-cell">' . $formattedDate . '</td>' : $formattedDate;
     }
 
     public function getMemberEntryStatus(Event $event, Member $member): string
