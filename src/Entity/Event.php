@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\InheritanceType("JOINED")]
@@ -19,37 +20,56 @@ class Event
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\Length(min: 3, max: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $name;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $date;
 
     #[ORM\Column(type: 'string', length: 150)]
+    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $location;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $entryDeadline;
 
     #[ORM\Column(type: 'string', length: 1000, nullable: true)]
+    #[Assert\Length(max: 1000)]
+    #[Assert\Type(type: 'string')]
     private $description;
 
     #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    #[Assert\Type(type: 'bool')]
     private $isCancelled = false;
 
     #[ORM\ManyToOne(targetEntity: Discipline::class, inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Type(type: Discipline::class)]
     private $discipline;
 
     #[ORM\ManyToMany(targetEntity: Organizer::class, inversedBy: 'events')]
+    #[Assert\Count(min: 1)]
+    #[Assert\Type(type: 'array')]
     private $organizers;
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Entry::class)]
+    #[Assert\Type(type: 'array')]
     private $entries;
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Comment::class)]
+    #[Assert\Type(type: 'array')]
     private $comments;
 
     #[ORM\ManyToMany(targetEntity: Category::class)]
+    #[Assert\Type(type: 'array')]
     private $categories;
 
     public function __construct()

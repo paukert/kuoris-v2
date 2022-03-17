@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
@@ -14,6 +15,9 @@ class Category
     private $id;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Assert\Length(max: 50)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $name;
 
     public function getId(): ?int

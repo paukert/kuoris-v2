@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AnnouncementRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnnouncementRepository::class)]
 class Announcement
@@ -14,16 +15,25 @@ class Announcement
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\Length(min: 5, max: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $headline;
 
     #[ORM\Column(type: 'string', length: 500)]
+    #[Assert\Length(min: 5, max: 500)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $text;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'announcements')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Type(type: Member::class)]
     private $member;
 
     public function __construct()

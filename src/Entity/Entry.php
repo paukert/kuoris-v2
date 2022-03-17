@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EntryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EntryRepository::class)]
 class Entry
@@ -11,18 +12,26 @@ class Entry
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'entries')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Type(type: Event::class)]
     private $event;
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'entries')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Type(type: Member::class)]
     private $member;
 
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Type(type: Category::class)]
     private $category;
 
     #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    #[Assert\Type(type: 'bool')]
     private $car = false;
 
     public function __construct(Event $event, Member $member)

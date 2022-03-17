@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 class Member implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,42 +19,67 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 10, unique: true)]
+    #[Assert\Length(min: 5, max: 10)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $registration;
 
     #[ORM\Column(type: 'json')]
+    #[Assert\Type(type: 'array')]
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
+    #[Assert\Length(max: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $password;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\Length(min: 2, max: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\Length(min: 2, max: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 200, nullable: true)]
+    #[Assert\Email]
+    #[Assert\Length(max: 200)]
+    #[Assert\Type(type: 'string')]
     private $mail;
 
     #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    #[Assert\Type(type: 'bool')]
     private $sendNotification = false;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Assert\Type(type: 'bool')]
     private $activeMembership;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Type(type: 'integer')]
     private $bankBalance;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Comment::class)]
+    #[Assert\Type(type: 'array')]
     private $comments;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Announcement::class)]
+    #[Assert\Type(type: 'array')]
     private $announcements;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Entry::class)]
+    #[Assert\Type(type: 'array')]
     private $entries;
 
     #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    #[Assert\Type(type: 'bool')]
     private $isActive = false;
 
     public function __construct()

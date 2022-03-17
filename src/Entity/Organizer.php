@@ -6,6 +6,7 @@ use App\Repository\OrganizerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrganizerRepository::class)]
 class Organizer
@@ -16,9 +17,13 @@ class Organizer
     private $id;
 
     #[ORM\Column(type: 'string', length: 150)]
+    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $name;
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'organizers')]
+    #[Assert\Type(type: 'array')]
     private $events;
 
     public function __construct()

@@ -6,6 +6,7 @@ use App\Repository\CompetitionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CompetitionRepository::class)]
 class Competition
@@ -16,9 +17,13 @@ class Competition
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\Length(min: 3, max: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $name;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'competitions')]
+    #[Assert\Type(type: 'array')]
     private $races;
 
     public function __construct()

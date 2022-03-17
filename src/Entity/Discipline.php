@@ -6,6 +6,7 @@ use App\Repository\DisciplineRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DisciplineRepository::class)]
 class Discipline
@@ -16,12 +17,19 @@ class Discipline
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Assert\Length(min: 5, max: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $name;
 
     #[ORM\OneToMany(mappedBy: 'discipline', targetEntity: Event::class)]
+    #[Assert\Type(type: 'array')]
     private $events;
 
     #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\Length(max: 10)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $abbr;
 
     public function __construct()

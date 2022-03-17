@@ -6,6 +6,7 @@ use App\Repository\LevelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LevelRepository::class)]
 class Level
@@ -16,12 +17,19 @@ class Level
     private $id;
 
     #[ORM\Column(type: 'string', length: 150)]
+    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $name;
 
     #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\Length(max: 10)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $abbr;
 
     #[ORM\OneToMany(mappedBy: 'level', targetEntity: Race::class)]
+    #[Assert\Type(type: 'array')]
     private $races;
 
     public function __construct()

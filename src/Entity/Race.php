@@ -6,6 +6,7 @@ use App\Repository\RaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RaceRepository::class)]
 class Race extends Event
@@ -13,19 +14,27 @@ class Race extends Event
     private const ORIS_EVENT_URL = 'https://oris.orientacnisporty.cz/Zavod?id=';
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Type(type: 'integer')]
     private $orisId;
 
     #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    #[Assert\Type(type: 'bool')]
     private $autoUpdate = false;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 255)]
+    #[Assert\Url]
     private $website;
 
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'races')]
+    #[Assert\Type(type: 'array')]
     private $competitions;
 
     #[ORM\ManyToOne(targetEntity: Level::class, inversedBy: 'races')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: Level::class)]
     private $level;
 
     public function __construct()

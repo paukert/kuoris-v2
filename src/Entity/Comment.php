@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -15,19 +16,28 @@ class Comment
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Type(type: Event::class)]
     private $event;
 
     #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull]
+    #[Assert\Type(type: Member::class)]
     private $member;
 
     #[ORM\Column(type: 'string', length: 500)]
+    #[Assert\Length(max: 500)]
+    #[Assert\NotBlank]
+    #[Assert\Type(type: 'string')]
     private $text;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\NotBlank]
     private $updatedAt;
 
     public function __construct()
