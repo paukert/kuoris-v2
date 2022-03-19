@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AnnouncementRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,6 +29,7 @@ class Announcement
 
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank]
+    #[Assert\Type(type: DateTime::class)]
     private $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'announcements')]
@@ -38,7 +40,7 @@ class Announcement
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
     }
 
     public function getId(): ?int

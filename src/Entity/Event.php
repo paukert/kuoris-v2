@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,6 +28,7 @@ class Event
 
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank]
+    #[Assert\Type(type: DateTime::class)]
     private $date;
 
     #[ORM\Column(type: 'string', length: 150)]
@@ -37,6 +39,7 @@ class Event
 
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank]
+    #[Assert\Type(type: DateTime::class)]
     private $entryDeadline;
 
     #[ORM\Column(type: 'string', length: 1000, nullable: true)]
@@ -69,6 +72,7 @@ class Event
     private $comments;
 
     #[ORM\ManyToMany(targetEntity: Category::class)]
+    #[ORM\OrderBy(['name' => 'ASC'])]
     #[Assert\Type(type: 'array')]
     private $categories;
 

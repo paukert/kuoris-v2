@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>{{ event.name }}</h1>
-    <h2>Informace:</h2>
+    <h2>Informace</h2>
     <hr>
     {% if isRace %}
         <div class="row mb-2">
@@ -51,7 +51,7 @@
         </div>
     {% endif %}
 
-    <h2>Kategorie:</h2>
+    <h2>Kategorie</h2>
     <hr>
     {% if event.categories is empty %}
         Kategorie zatím nebyly v systému definované
@@ -61,7 +61,7 @@
         {% endfor %}
     {% endif %}
 
-    <h2>Přihlášky:</h2>
+    <h2>Přihlášky</h2>
     <hr>
     <div class="row mb-2">
         <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Uzávěrka přihlášek:</span>
@@ -96,7 +96,42 @@
         </span>
     </div>
 
-    <h2>Komentáře:</h2>
+    {{ form_start(entryForm) }}
+    {{ form_widget(entryForm) }}
+    <button class="btn btn-primary" name="save" type="submit">{{ isNewEntry ? 'Přihlásit' : 'Upravit přihlášku' }}</button>
+    {% if not isNewEntry %}
+        <button class="btn btn-primary" name="delete" type="submit">Odhlásit</button>
+    {% endif %}
+    {{ form_end(entryForm) }}
+
+    <h2 id="comments">Komentáře</h2>
     <hr>
+    {% if event.comments is empty %}
+        <div class="row mb-2">
+            <span class="col-md">Zatím nikdo nepřidal komentář</span>
+        </div>
+    {% else %}
+        {% for comment in event.comments %}
+            <div class="row mb-2">
+                <span class="col-xl-2 col-lg-3 col-md-4">
+                    {{ comment.createdAt | date('d. m. Y H:i:s') }}
+                    <a href="{{ path('event_detail', { id: event.id, 'comment': comment.id, '_fragment': 'comments' }) }}">
+                        <span class="fa-solid fa-pencil"></span>
+                    </a>
+                    {# TODO: deleting comments #}
+                    <span class="fa-solid fa-trash-can"></span>
+                </span>
+                <span class="col-md">{{ comment.member.name ~ ': ' ~ comment.text }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="row justify-content-start mt-4">
+        <div class="col-6">
+            {{ form_start(commentForm) }}
+            {{ form_widget(commentForm) }}
+            <button class="btn btn-primary" type="submit">{{ isNewComment ? 'Přidat komentář' : 'Upravit komentář' }}</button>
+            {{ form_end(commentForm) }}
+        </div>
+    </div>
 
 {% endblock %}

@@ -47,3 +47,11 @@
 .fa-sort::before {
     content: "\f0dc";
 }
+
+.fa-pencil::before {
+    content: "\f303";
+}
+
+.fa-trash-can::before {
+    content: "\f2ed";
+}

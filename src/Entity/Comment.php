@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,15 +35,18 @@ class Comment
 
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank]
+    #[Assert\Type(type: DateTime::class)]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Assert\NotBlank]
+    #[Assert\Type(type: DateTime::class)]
     private $updatedAt;
 
-    public function __construct()
+    public function __construct(Event $event, Member $member)
     {
-        $this->createdAt = new \DateTime();
+        $this->event = $event;
+        $this->member = $member;
+        $this->createdAt = new DateTime();
     }
 
     public function getId(): ?int
@@ -55,23 +59,9 @@ class Comment
         return $this->event;
     }
 
-    public function setEvent(?Event $event): self
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
     public function getMember(): ?Member
     {
         return $this->member;
-    }
-
-    public function setMember(?Member $member): self
-    {
-        $this->member = $member;
-
-        return $this;
     }
 
     public function getText(): ?string
