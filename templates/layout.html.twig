@@ -24,7 +24,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-light bg-light" style="background-color: #e8e8e8 !important;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ path('app_homepage') }}">
                 <img src="/img/logo.png" alt="" height="35px">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -35,13 +35,25 @@
                 <ul class="navbar-nav">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_homepage') }}">Hlavní stránka</a>
+                            {% if app.request.attributes.get('_route') == 'app_homepage' %}
+                                <a class="nav-link active" aria-current="page" href="#">Hlavní stránka</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('app_homepage') }}">Hlavní stránka</a>
+                            {% endif %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('list_races') }}">Závody</a>
+                            {% if app.request.attributes.get('_route') == 'list_races' %}
+                                <a class="nav-link active" aria-current="page" href="#">Závody</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('list_races') }}">Závody</a>
+                            {% endif %}
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('list_trainings') }}">Tréninky</a>
+                            {% if app.request.attributes.get('_route') == 'list_trainings' %}
+                                <a class="nav-link active" aria-current="page" href="#">Tréninky</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('list_trainings') }}">Tréninky</a>
+                            {% endif %}
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
@@ -56,7 +68,11 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_login') }}">Přihlásit</a>
+                            {% if app.request.attributes.get('_route') == 'app_login' %}
+                                <a class="nav-link active" aria-current="page" href="#">Přihlásit</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('app_login') }}">Přihlásit</a>
+                            {% endif %}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Registrovat</a>
@@ -91,7 +107,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-<script src="{{ asset('js/navbar.js') }}" defer></script>
 
 {% block scripts %}
 {% endblock %}
