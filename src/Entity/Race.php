@@ -20,18 +20,18 @@ class Race extends Event
     #[ORM\Column(type: 'boolean')]
     #[Assert\NotNull]
     #[Assert\Type(type: 'bool')]
-    private $autoUpdate = false;
+    private $autoUpdate = true;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
     #[Assert\Url]
     private $website;
 
-    #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'races')]
+    #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'races', cascade: ['persist'])]
     #[Assert\Type(type: 'array')]
     private $competitions;
 
-    #[ORM\ManyToOne(targetEntity: Level::class, inversedBy: 'races')]
+    #[ORM\ManyToOne(targetEntity: Level::class, cascade: ['persist'], inversedBy: 'races')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Type(type: Level::class)]

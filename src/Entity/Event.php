@@ -52,13 +52,13 @@ class Event
     #[Assert\Type(type: 'bool')]
     private $isCancelled = false;
 
-    #[ORM\ManyToOne(targetEntity: Discipline::class, inversedBy: 'events')]
+    #[ORM\ManyToOne(targetEntity: Discipline::class, cascade: ['persist'], inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull]
     #[Assert\Type(type: Discipline::class)]
     private $discipline;
 
-    #[ORM\ManyToMany(targetEntity: Organizer::class, inversedBy: 'events')]
+    #[ORM\ManyToMany(targetEntity: Organizer::class, inversedBy: 'events', cascade: ['persist'])]
     #[Assert\Count(min: 1)]
     #[Assert\Type(type: 'array')]
     private $organizers;
@@ -71,7 +71,7 @@ class Event
     #[Assert\Type(type: 'array')]
     private $comments;
 
-    #[ORM\ManyToMany(targetEntity: Category::class)]
+    #[ORM\ManyToMany(targetEntity: Category::class, cascade: ['persist'])]
     #[ORM\OrderBy(['name' => 'ASC'])]
     #[Assert\Type(type: 'array')]
     private $categories;

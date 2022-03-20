@@ -20,6 +20,10 @@ class Category
     #[Assert\Type(type: 'string')]
     private $name;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Type(type: 'integer')]
+    private $orisId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -33,6 +37,18 @@ class Category
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getOrisId(): ?int
+    {
+        return $this->orisId;
+    }
+
+    public function setOrisId(?int $orisId): self
+    {
+        $this->orisId = $orisId;
 
         return $this;
     }
