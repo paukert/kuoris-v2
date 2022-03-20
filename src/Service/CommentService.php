@@ -17,6 +17,12 @@ class CommentService
         $this->entityManager = $entityManager;
     }
 
+    public function delete(Comment $comment): void
+    {
+        $this->entityManager->remove($comment);
+        $this->entityManager->flush();
+    }
+
     public function getById(int $commentId): ?Comment
     {
         return $this->commentRepository->find($commentId);

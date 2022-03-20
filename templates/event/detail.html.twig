@@ -115,11 +115,16 @@
             <div class="row mb-2">
                 <span class="col-xl-2 col-lg-3 col-md-4">
                     {{ comment.createdAt | date('d. m. Y H:i:s') }}
-                    <a href="{{ path('event_detail', { id: event.id, 'comment': comment.id, '_fragment': 'comments' }) }}">
-                        <span class="fa-solid fa-pencil"></span>
-                    </a>
-                    {# TODO: deleting comments #}
-                    <span class="fa-solid fa-trash-can"></span>
+                    {% if is_granted('EDIT_COMMENT', comment) %}
+                        <a href="{{ path('event_detail', { id: event.id, 'comment': comment.id, '_fragment': 'comments' }) }}">
+                            <span class="fa-solid fa-pencil"></span>
+                        </a>
+                    {% endif %}
+                    {% if is_granted('DELETE_COMMENT', comment) %}
+                        <a href="{{ path('comment_delete', { id: comment.id }) }}">
+                            <span class="fa-solid fa-trash-can"></span>
+                        </a>
+                    {% endif %}
                 </span>
                 <span class="col-md">{{ comment.member.name ~ ': ' ~ comment.text }}</span>
             </div>

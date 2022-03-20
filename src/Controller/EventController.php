@@ -10,6 +10,7 @@ use App\Entity\Race;
 use App\Entity\Training;
 use App\Form\Type\CommentType;
 use App\Form\Type\EntryType;
+use App\Security\CommentVoter;
 use App\Service\CommentService;
 use App\Service\EntryService;
 use App\Service\EventService;
@@ -41,6 +42,7 @@ class EventController extends AbstractController
 
         $commentId = $request->query->getInt('comment');
         $comment = $this->commentService->getById($commentId) ?? new Comment($event, $member);
+        $this->denyAccessUnlessGranted(CommentVoter::EDIT_COMMENT, $comment);
         $isCommentManaged = $this->commentService->isManaged($comment);
         $commentForm = $this->createForm(CommentType::class, $comment);
 
