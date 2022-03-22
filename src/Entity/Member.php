@@ -71,15 +71,15 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     private $bankBalance;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Comment::class)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $comments;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Announcement::class)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $announcements;
 
     #[ORM\OneToMany(mappedBy: 'member', targetEntity: Entry::class)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $entries;
 
     #[ORM\Column(type: 'boolean')]

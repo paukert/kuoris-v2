@@ -61,7 +61,11 @@
                             </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Nastavení</a>
+                            {% if app.request.attributes.get('_route') == 'app_settings' %}
+                                <a class="nav-link active" aria-current="page" href="#">Nastavení</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('app_settings') }}">Nastavení</a>
+                            {% endif %}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_logout') }}">Odhlásit</a>
