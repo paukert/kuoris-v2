@@ -11,6 +11,7 @@ use App\Entity\Training;
 use App\Form\Type\CommentType;
 use App\Form\Type\EntryType;
 use App\Security\CommentVoter;
+use App\Security\EventVoter;
 use App\Service\CommentService;
 use App\Service\EntryService;
 use App\Service\EventService;
@@ -62,6 +63,11 @@ class EventController extends AbstractController
 
         $entryForm->handleRequest($request);
         if ($entryForm->isSubmitted() && $entryForm->isValid()) {
+            if (!$this->isGranted(EventVoter::EDIT_ENTRY, $event)) {
+                $this->addFlash('danger', 'Termín přihlášek již vypršel. Pro přihlášení (úpravu přihlášky) po termínu kontaktuj co nejdříve Kamila.');
+                return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => false]);
+            }
+
             if ($request->request->has('delete')) {
                 $this->entryService->delete($entry);
                 $this->addFlash('success', 'Odhlášení ze závodu proběhlo úspěšně.');
