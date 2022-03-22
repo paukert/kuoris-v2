@@ -24,8 +24,8 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-light bg-light" style="background-color: #e8e8e8 !important;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ path('app_homepage') }}">
-                <img src="/img/logo.png" alt="" height="35px">
+            <a class="navbar-brand" href="{{ path(is_granted('IS_AUTHENTICATED_REMEMBERED') ? 'app_homepage' : 'app_landing') }}">
+                <img src="{{ asset('img/logo.svg') }}" alt="Logo" height="40px">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Zobrazit/skrýt navigaci">
@@ -84,7 +84,7 @@
     </nav>
 </header>
 
-<main>
+<main {{ app.request.attributes.get('_route') == 'app_landing' ? 'style="align-self: center;"' : '' }}>
     {% for type, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">

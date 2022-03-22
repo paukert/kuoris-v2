@@ -28,6 +28,7 @@ security:
                 username_parameter: username
                 password_parameter: password
                 enable_csrf: true
+                default_target_path: app_homepage
             # maximum login attempts (per minute)
             login_throttling:
                 max_attempts: 5
@@ -44,6 +45,7 @@ security:
 
     # Only the FIRST access control that matches will be used
     access_control:
+        - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/*, roles: IS_AUTHENTICATED_REMEMBERED }
 
