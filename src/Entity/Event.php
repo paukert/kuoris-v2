@@ -60,20 +60,20 @@ class Event
 
     #[ORM\ManyToMany(targetEntity: Organizer::class, inversedBy: 'events', cascade: ['persist'])]
     #[Assert\Count(min: 1)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $organizers;
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Entry::class)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $entries;
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Comment::class)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $comments;
 
     #[ORM\ManyToMany(targetEntity: Category::class, cascade: ['persist'])]
     #[ORM\OrderBy(['name' => 'ASC'])]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $categories;
 
     public function __construct()

@@ -29,7 +29,7 @@ class Level
     private $abbr;
 
     #[ORM\OneToMany(mappedBy: 'level', targetEntity: Race::class)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $races;
 
     public function __construct()

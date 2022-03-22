@@ -23,7 +23,7 @@ class Discipline
     private $name;
 
     #[ORM\OneToMany(mappedBy: 'discipline', targetEntity: Event::class)]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $events;
 
     #[ORM\Column(type: 'string', length: 10)]

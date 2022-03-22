@@ -28,7 +28,7 @@ class Race extends Event
     private $website;
 
     #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'races', cascade: ['persist'])]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $competitions;
 
     #[ORM\ManyToOne(targetEntity: Level::class, cascade: ['persist'], inversedBy: 'races')]

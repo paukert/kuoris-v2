@@ -25,7 +25,7 @@ class Organizer
     private $name;
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'organizers')]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $events;
 
     public function __construct()

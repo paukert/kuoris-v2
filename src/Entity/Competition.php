@@ -23,7 +23,7 @@ class Competition
     private $name;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'competitions')]
-    #[Assert\Type(type: 'array')]
+    #[Assert\Type(type: Collection::class)]
     private $races;
 
     public function __construct()
