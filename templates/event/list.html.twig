@@ -3,6 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
+    <h1 class="mb-3">{{ title }}</h1>
     <form method="GET" action="{{ path(app.request.attributes.get('_route')) }}" class="row g-3 mb-3">
         <div class="col-sm-6">
             <input class="form-control" type="search" name="hint" value="{{ hint is null ? '' : hint }}" placeholder="Vyhledávat podle názvu" aria-label="Název události"/>
