@@ -23,7 +23,7 @@ class EntryType extends AbstractType
                 'placeholder' => 'Vyber jednu z kategorií',
             ])
             ->add('car', CheckboxType::class, [
-                'label' => 'Auto',
+                'label' => 'Mohu vzít auto',
                 'required' => false,
             ]);
     }

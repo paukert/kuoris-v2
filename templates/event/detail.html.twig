@@ -10,24 +10,24 @@
     <hr>
     {% if isRace %}
         <div class="row mb-2">
-            <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Typ:</span>
+            <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Typ:</span>
             <span class="col-md">{{ event.level.name }}</span>
         </div>
     {% endif %}
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Datum:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Datum:</span>
         <span class="col-md">{{ event.date | date('d. m. Y') }}</span>
     </div>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Místo:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Místo:</span>
         <span class="col-md">{{ event.location }}</span>
     </div>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Start 00:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Start 00:</span>
         <span class="col-md">{{ event.date | date('H:i:s') }}</span>
     </div>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Pořadatel:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Pořadatel:</span>
         <span class="col-md">
             {% for organizer in event.organizers %}
                 {{ organizer.name }}{{ not loop.last ? "," }}
@@ -35,18 +35,18 @@
         </span>
     </div>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Disciplína:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Disciplína:</span>
         <span class="col-md">{{ event.discipline.name }}</span>
     </div>
     {% if isRace and event.website is not empty %}
         <div class="row mb-2">
-            <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Stránka závodu:</span>
+            <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Stránka závodu:</span>
             <span class="col-md"><a href="{{ event.website }}" target="_blank">{{ event.website }}</a></span>
         </div>
     {% endif %}
     {% if event.description is not empty %}
         <div class="row mb-2">
-            <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Další informace:</span>
+            <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Další informace:</span>
             <span class="col-md">{{ event.description }}</span>
         </div>
     {% endif %}
@@ -64,15 +64,15 @@
     <h2>Přihlášky</h2>
     <hr>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Uzávěrka přihlášek:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Uzávěrka přihlášek:</span>
         <span class="col-md">{{ event.entryDeadline | deadline(false) | raw }}</span>
     </div>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Stav:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Stav:</span>
         <span class="col-md">{{ memberEntryStatus(event, app.user) }}</span>
     </div>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Přihlášeni:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Přihlášeni:</span>
         <span class="col-md">
             {% if event.entries is empty %}
                 Na tuto událost zatím není nikdo přihlášený
@@ -84,7 +84,7 @@
         </span>
     </div>
     <div class="row mb-2">
-        <span class="col-xl-2 col-lg-3 col-md-4 fw-bolder">Řidiči:</span>
+        <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Řidiči:</span>
         <span class="col-md">
             {% if event.entriesWithDrivers is empty %}
                 Na tuto událost zatím nemůže nikdo vzít auto
@@ -113,20 +113,23 @@
     {% else %}
         {% for comment in event.comments %}
             <div class="row mb-2">
-                <span class="col-xl-2 col-lg-3 col-md-4">
-                    {{ comment.createdAt | date('d. m. Y H:i:s') }}
-                    {% if is_granted('EDIT_COMMENT', comment) %}
-                        <a href="{{ path('event_detail', { id: event.id, 'comment': comment.id, '_fragment': 'comments' }) }}">
-                            <span class="fa-solid fa-pencil"></span>
-                        </a>
-                    {% endif %}
-                    {% if is_granted('DELETE_COMMENT', comment) %}
-                        <a href="{{ path('comment_delete', { id: comment.id }) }}">
-                            <span class="fa-solid fa-trash-can"></span>
-                        </a>
-                    {% endif %}
+                <span class="col-xxl-2 col-lg-3 col-md-4">
+                    <div class="fw-bolder">{{ comment.member.name }}</div>
+                    <div class="fst-italic">
+                        {{ comment.createdAt | date('d. m. Y H:i') }}
+                        {% if is_granted('EDIT_COMMENT', comment) %}
+                            <a href="{{ path('event_detail', { id: event.id, 'comment': comment.id, '_fragment': 'comments' }) }}">
+                                <span class="fa-solid fa-pencil"></span>
+                            </a>
+                        {% endif %}
+                        {% if is_granted('DELETE_COMMENT', comment) %}
+                            <a href="{{ path('comment_delete', { id: comment.id }) }}">
+                                <span class="fa-solid fa-trash-can"></span>
+                            </a>
+                        {% endif %}
+                    </div>
                 </span>
-                <span class="col-md">{{ comment.member.name ~ ': ' ~ comment.text }}</span>
+                <span class="col-md">{{ comment.text }}</span>
             </div>
         {% endfor %}
     {% endif %}
