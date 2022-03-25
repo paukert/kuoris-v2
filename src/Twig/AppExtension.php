@@ -22,7 +22,6 @@ class AppExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('attendance', [$this, 'getAttendanceLabel']),
             new TwigFilter('deadline', [$this, 'getFormattedDeadline']),
         ];
     }
@@ -32,16 +31,6 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('memberEntryStatus', [$this, 'getMemberEntryStatus']),
         ];
-    }
-
-    public function getAttendanceLabel(int $competitorsCount): string
-    {
-        if ($competitorsCount > 4 || $competitorsCount === 0) {
-            return $competitorsCount . ' závodníků';
-        } elseif ($competitorsCount > 1) {
-            return $competitorsCount . ' závodníci';
-        }
-        return '1 závodník';
     }
 
     public function getFormattedDeadline(DateTime $date, bool $formatAsCell = true): string

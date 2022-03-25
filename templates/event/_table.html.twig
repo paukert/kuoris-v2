@@ -9,7 +9,7 @@
                 <th scope="col" class="d-none d-md-table-cell">Typ</th>
             {% endif %}
             <th scope="col" class="d-none d-sm-table-cell">Uzávěrka přihlášek</th>
-            <th scope="col" class="d-none d-lg-table-cell">Účast</th>
+            <th scope="col" class="d-none d-lg-table-cell"><abbr title="Počet přihlášených">PP</abbr></th>
             <th scope="col" class="d-none d-md-table-cell">Stav</th>
         </tr>
         </thead>
@@ -22,7 +22,7 @@
                     <td class="level d-none d-md-table-cell"><abbr title="{{ event.level.name }}">{{ event.level.abbr }}</abbr></td>
                 {% endif %}
                 {{ event.entryDeadline | deadline | raw }}
-                <td class="attendance d-none d-lg-table-cell">{{ event.entriesCount | attendance }}</td>
+                <td class="attendance d-none d-lg-table-cell">{{ event.entriesCount }}</td>
                 <td class="entry-status d-none d-md-table-cell">{{ memberEntryStatus(event, app.user) }}</td>
             </tr>
         {% endfor %}
