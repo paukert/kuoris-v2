@@ -42,7 +42,7 @@ function getRowContent(row) {
         <td colspan="6">
             <ul>
                 ${level ? `
-                    <li class="d-md-none">
+                    <li class="d-lg-none">
                         <span class="title">Typ:</span>
                         ${level.innerText}
                     </li>

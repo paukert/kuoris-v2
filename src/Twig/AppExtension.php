@@ -36,7 +36,7 @@ class AppExtension extends AbstractExtension
     public function getFormattedDeadline(DateTime $date, bool $formatAsCell = true): string
     {
         $now = new DateTime();
-        $formattedDate = $date->format('d. m. Y H:i:s');
+        $formattedDate = $date->format('d. m. Y H:i');
         if ($date > $now && $date < $now->modify('+3 days')) {
             if ($formatAsCell) {
                 return '<td class="deadline table-danger d-none d-sm-table-cell">' . $formattedDate . '</td>';
