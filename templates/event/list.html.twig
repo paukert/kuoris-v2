@@ -24,8 +24,7 @@
         <p class="no-events">Nebyly nalezeny žádné {{ title | lower }} odpovídající zadanému filtru &#128533;</p>
     {% else %}
         {% include 'event/_table.html.twig' with {
-            'events': pagination,
-            'caption': title
+            'events': pagination
         } only %}
     {% endif %}
 
