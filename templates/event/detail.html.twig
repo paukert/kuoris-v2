@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% set isRace = event.level is defined %}
+{% set closedEntries = event.entryDeadline < date('now') %}
 
 {% block title %}{{ event.name }}{% endblock %}
 
@@ -24,7 +24,7 @@
     <h1>{{ event.name }}</h1>
     <h2>Informace</h2>
     <hr>
-    {% if isRace %}
+    {% if event.isRace %}
         <div class="row mb-2">
             <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Typ:</span>
             <span class="col-md">{{ event.level.name }}</span>
@@ -54,7 +54,7 @@
         <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Disciplína:</span>
         <span class="col-md">{{ event.discipline.name }}</span>
     </div>
-    {% if isRace and event.website is not empty %}
+    {% if event.isRace and event.website is not empty %}
         <div class="row mb-2">
             <span class="col-xxl-2 col-lg-3 col-md-4 fw-bolder">Stránka závodu:</span>
             <span class="col-md"><a href="{{ event.website }}" target="_blank">{{ event.website }}</a></span>
@@ -113,11 +113,13 @@
     </div>
 
     {{ form_start(entryForm) }}
-    {{ form_widget(entryForm) }}
-    <button class="btn btn-primary" name="save" type="submit">{{ isNewEntry ? 'Přihlásit' : 'Upravit přihlášku' }}</button>
-    {% if not isNewEntry %}
-        <button class="btn btn-danger" name="delete" type="button" data-bs-toggle="modal" data-bs-target="#deleteEntryModal">Odhlásit</button>
-    {% endif %}
+    <fieldset {{ closedEntries ? 'disabled' : '' }}>
+        {{ form_widget(entryForm) }}
+        <button class="btn btn-primary" name="save" type="submit">{{ isNewEntry ? 'Přihlásit' : 'Upravit přihlášku' }}</button>
+        {% if not isNewEntry %}
+            <button class="btn btn-danger" name="delete" type="button" data-bs-toggle="modal" data-bs-target="#deleteEntryModal">Odhlásit</button>
+        {% endif %}
+    </fieldset>
     {{ form_end(entryForm) }}
 
     <h2 id="comments">Komentáře</h2>
