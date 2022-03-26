@@ -120,4 +120,9 @@ class Race extends Event
 
         return $this;
     }
+
+    public function isRace(): bool
+    {
+        return true;
+    }
 }

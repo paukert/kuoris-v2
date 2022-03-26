@@ -25,4 +25,9 @@ class Training extends Event
 
         return $this;
     }
+
+    public function isRace(): bool
+    {
+        return false;
+    }
 }

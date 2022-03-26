@@ -55,6 +55,14 @@ hr {
     margin: 2rem;
 }
 
+/* Navigation */
+.navbar-light .navbar-nav .nav-link.active {
+    text-decoration: overline;
+    text-decoration-color: #f76d22;
+    text-decoration-thickness: 0.1rem;
+}
+/* End - Navigation * /
+
 /* Tables */
 .table-danger {
     --bs-table-striped-color: #721c24;

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\InheritanceType("JOINED")]
 #[ORM\DiscriminatorColumn(name: "discriminator", type: "string")]
 #[ORM\DiscriminatorMap(["race" => "Race", "training" => "Training"])]
-class Event
+abstract class Event
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -75,6 +75,8 @@ class Event
     #[ORM\OrderBy(['name' => 'ASC'])]
     #[Assert\Type(type: Collection::class)]
     private $categories;
+
+    abstract public function isRace(): bool;
 
     public function __construct()
     {
