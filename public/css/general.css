@@ -100,3 +100,10 @@ table td.date {
     }
 }
 /* End - Pagination */
+
+/* Form */
+.form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* End - Form */

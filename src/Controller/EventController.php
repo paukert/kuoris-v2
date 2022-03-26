@@ -54,7 +54,7 @@ class EventController extends AbstractController
             }
             $this->addFlash('success', 'Komentář byl úspěšně ' . ($isCommentManaged ? 'upraven.' : 'přidán.'));
             $this->commentService->save($comment);
-            return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => false]);
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => 'top']);
         }
 
         $entry = $this->entryService->getByIds($event, $member) ?? new Entry($event, $member);
@@ -64,8 +64,8 @@ class EventController extends AbstractController
         $entryForm->handleRequest($request);
         if ($entryForm->isSubmitted() && $entryForm->isValid()) {
             if (!$this->isGranted(EventVoter::EDIT_ENTRY, $event)) {
-                $this->addFlash('danger', 'Termín přihlášek již vypršel. Pro přihlášení (úpravu přihlášky) po termínu kontaktuj co nejdříve Kamila.');
-                return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => false]);
+                $this->addFlash('danger', 'Termín přihlášek již vypršel. Pro přihlášení (úpravu přihlášky) po termínu kontaktuj co nejdříve <a href="mailto:kamil.koblizek@seznam.cz">Kamila</a>.');
+                return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => 'top']);
             }
 
             if ($request->request->has('delete')) {
@@ -75,7 +75,7 @@ class EventController extends AbstractController
                 $this->entryService->save($entry);
                 $this->addFlash('success', $isEntryManaged ? 'Úprava přihlášky byla úspěšně uložena.' : 'Přihlášení na událost proběhlo úspěšně.');
             }
-            return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => false]);
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => 'top']);
         }
 
         return $this->renderForm('event/detail.html.twig', [

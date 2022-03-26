@@ -37,6 +37,7 @@ class Setting extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Member::class,
+            'attr' => ['class' => 'form'],
         ]);
     }
 }
