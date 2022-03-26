@@ -33,6 +33,7 @@ class EntryType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Entry::class,
             'categories' => [],
+            'attr' => ['id' => 'entryForm'],
         ]);
     }
 }
