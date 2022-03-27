@@ -47,6 +47,7 @@ security:
     access_control:
         - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/registration, roles: PUBLIC_ACCESS }
         - { path: ^/*, roles: IS_AUTHENTICATED_REMEMBERED }
 
 when@test:

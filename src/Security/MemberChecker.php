@@ -20,7 +20,7 @@ class MemberChecker implements UserCheckerInterface
 
         if (!$member->getIsActive()) {
             throw new CustomUserMessageAccountStatusException(
-                'Váš účet není aktivní, vyčkejte prosím na schválení administrátorem.'
+                'Tento účet není aktivní, vyčkej prosím na schválení administrátorem.'
             );
         }
     }

@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
-#[UniqueEntity('registration')]
+#[UniqueEntity('registration', message: 'Uživatel s uvedeným registračním číslem již existuje.')]
 class Member implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -35,7 +35,6 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string')]
     #[Assert\Length(max: 255)]
-    #[Assert\NotBlank]
     #[Assert\Type(type: 'string')]
     private $password;
 
