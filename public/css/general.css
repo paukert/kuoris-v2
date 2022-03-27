@@ -55,6 +55,11 @@ hr {
     margin: 2rem;
 }
 
+.edited {
+    opacity: 0.5;
+    font-size: small;
+}
+
 /* Navbar */
 .navbar-light .navbar-nav .nav-link.active {
     text-decoration: overline;

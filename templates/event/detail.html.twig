@@ -147,7 +147,14 @@
                         {% endif %}
                     </div>
                 </span>
-                <span class="col-md">{{ comment.text }}</span>
+                <span class="col-md">
+                    {{ comment.text }}
+                    {% if comment.updatedAt is not null %}
+                        <span class="edited" title="Naposledy upraven: {{ comment.updatedAt | date('d. m. Y H:i') }}">
+                            (upraven)
+                        </span>
+                    {% endif %}
+                </span>
             </div>
         {% endfor %}
     {% endif %}
