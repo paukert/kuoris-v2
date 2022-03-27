@@ -55,13 +55,13 @@ hr {
     margin: 2rem;
 }
 
-/* Navigation */
+/* Navbar */
 .navbar-light .navbar-nav .nav-link.active {
     text-decoration: overline;
     text-decoration-color: #f76d22;
     text-decoration-thickness: 0.1rem;
 }
-/* End - Navigation * /
+/* End - Navbar * /
 
 /* Tables */
 .table-danger {
@@ -101,9 +101,9 @@ table td.date {
 }
 /* End - Pagination */
 
-/* Form */
-.form {
+/* Max width */
+.max-width-800 {
     max-width: 800px;
     margin: 0 auto;
 }
-/* End - Form */
+/* End - Max width */

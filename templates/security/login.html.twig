@@ -3,29 +3,31 @@
 {% block title %}Přihlášení{% endblock %}
 
 {% block content %}
-    {% if error %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ error.messageKey | trans(error.messageData, 'security') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zavřít"></button>
-        </div>
-    {% endif %}
-
-    <form class="form" action="{{ path('app_login') }}" method="POST">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <div class="mb-3">
-            <label for="username" class="form-label">Registrační číslo:</label>
-            <input type="text" id="username" name="username" class="form-control" aria-describedby="usernameHelp" value="{{ lastUsername }}"/>
-            <div id="usernameHelp" class="form-text">
-                Registrační číslo lze nalézt na stránkách klubu (<a href="https://www.kobusti.cz/klub/" target="_blank">https://www.kobusti.cz/klub/</a>)
+    <div class="max-width-800">
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error.messageKey | trans(error.messageData, 'security') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zavřít"></button>
             </div>
-        </div>
+        {% endif %}
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Heslo:</label>
-            <input type="password" id="password" name="password" class="form-control" required/>
-        </div>
+        <form action="{{ path('app_login') }}" method="POST">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button type="submit" class="btn btn-primary">Přihlásit</button>
-    </form>
+            <div class="mb-3">
+                <label for="username" class="form-label">Registrační číslo:</label>
+                <input type="text" id="username" name="username" class="form-control" aria-describedby="usernameHelp" value="{{ lastUsername }}"/>
+                <div id="usernameHelp" class="form-text">
+                    Registrační číslo lze nalézt na stránkách klubu (<a href="https://www.kobusti.cz/klub/" target="_blank">https://www.kobusti.cz/klub/</a>)
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Heslo:</label>
+                <input type="password" id="password" name="password" class="form-control" required/>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Přihlásit</button>
+        </form>
+    </div>
 {% endblock %}

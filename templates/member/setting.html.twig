@@ -3,9 +3,11 @@
 {% block title %}Nastavení{% endblock %}
 
 {% block content %}
-    <h1 class="mb-3 text-center">Nastavení</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary" type="submit">Uložit změny</button>
-    {{ form_end(form) }}
+    <div class="max-width-800">
+        <h1 class="mb-3 text-center">Nastavení</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary" type="submit">Uložit změny</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
