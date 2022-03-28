@@ -10,6 +10,7 @@ use App\Entity\Race;
 use App\Entity\Training;
 use App\Form\Type\CommentType;
 use App\Form\Type\EntryType;
+use App\Form\Type\EventType;
 use App\Security\CommentVoter;
 use App\Security\EventVoter;
 use App\Service\CommentService;
@@ -33,6 +34,23 @@ class EventController extends AbstractController
         $this->commentService = $commentService;
         $this->entryService = $entryService;
         $this->eventService = $eventService;
+    }
+
+    #[Route('/admin/events/{id}', name: 'edit_event')]
+    public function edit(Event $event, Request $request): Response
+    {
+        $form = $this->createForm(EventType::class, $event);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->eventService->save($event);
+            $this->addFlash('success', 'Událost byla úspěšně upravena.');
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
+        }
+
+        return $this->renderForm('event/edit.html.twig', [
+            'form' => $form,
+        ]);
     }
 
     #[Route('/events/{id}', name: 'event_detail')]

@@ -18,7 +18,7 @@ class CategoryType extends AbstractType
                 'label' => 'Název',
             ])
             ->add('orisId', IntegerType::class, [
-                'label' => 'ID kategorie v ORISu',
+                'label' => 'ORIS ID',
             ]);
     }
 

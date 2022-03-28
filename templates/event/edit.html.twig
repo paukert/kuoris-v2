@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Upravit událost{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    {% include 'event/_eventForm.html.twig' with {
+        'form': form
+    } only %}
+    <button class="btn btn-primary" type="submit">Upravit událost</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('js/event.js') }}" defer></script>
+{% endblock %}
