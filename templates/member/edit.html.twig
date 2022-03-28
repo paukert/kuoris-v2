@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Upravit uživatele{% endblock %}
+
+{% block content %}
+    <div class="max-width-800">
+        <h1 class="mb-3 text-center">Upravit uživatele</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary" type="submit">Uložit změny</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

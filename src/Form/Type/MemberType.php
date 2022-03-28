@@ -4,11 +4,13 @@ namespace App\Form\Type;
 
 use App\Entity\Member;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -17,7 +19,7 @@ class MemberType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        return $builder
+        $builder
             ->add('firstName', TextType::class, [
                 'label' => 'Křestní jméno',
             ])
@@ -32,18 +34,43 @@ class MemberType extends AbstractType
             ->add('mail', EmailType::class, [
                 'label' => 'E-mail',
             ])
-            ->add('plaintextPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Zadaná hesla se neshodují.',
-                'required' => true,
-                'mapped' => false,
-                'first_options' => ['label' => 'Heslo'],
-                'second_options' => ['label' => 'Kontrola hesla'],
+            ->add('plaintextPassword', RepeatedPasswordType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length(min: 5, minMessage: 'Heslo musí být minimálně {{ limit }} znaků dlouhé.'),
                 ],
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $member = $event->getData();
+            $form = $event->getForm();
+
+            if ($member && $member->getId() !== null) {
+                $form
+                    ->add('plaintextPassword', RepeatedPasswordType::class, [
+                        'required' => false,
+                    ])
+                    ->add('roles', RoleType::class)
+                    ->add('sendNotification', CheckboxType::class, [
+                        'label' => 'Zasílat oznámení při přidání nové události',
+                        'required' => false,
+                    ])
+                    ->add('activeMembership', CheckboxType::class, [
+                        'label' => 'Aktivní členství',
+                        'required' => false,
+                    ])
+                    ->add('bankBalance', IntegerType::class, [
+                        'label' => 'Stav klubového konta',
+                        'required' => false,
+                    ])
+                    ->add('isActive', CheckboxType::class, [
+                        'label' => 'Povoleno přihlášení',
+                        'required' => false,
+                    ]);
+            }
+        });
+
+        return $builder;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

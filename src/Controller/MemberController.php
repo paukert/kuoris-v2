@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Member;
 use App\Form\Setting;
+use App\Form\Type\MemberType;
 use App\Service\MemberService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,28 @@ class MemberController extends AbstractController
     public function __construct(MemberService $memberService)
     {
         $this->memberService = $memberService;
+    }
+
+    #[Route('/admin/members/{id}', name: 'edit_member')]
+    public function edit(Member $member, Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $form = $this->createForm(MemberType::class, $member);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('plaintextPassword')->getData() !== null) {
+                $hashedPassword = $passwordHasher->hashPassword($member, $form->get('plaintextPassword')->getData());
+                $member->setPassword($hashedPassword);
+            }
+
+            $this->memberService->save($member);
+            $this->addFlash('success', 'Uživatel byl úspěšně upraven.');
+            return $this->redirectToRoute('edit_member', ['id' => $member->getId()]);
+        }
+
+        return $this->renderForm('member/edit.html.twig', [
+            'form' => $form,
+        ]);
     }
 
     #[Route('/settings', name: 'app_settings')]
@@ -35,8 +58,8 @@ class MemberController extends AbstractController
                 $member->setPassword($hashedPassword);
             }
 
-            $this->addFlash('success', 'Změny byly úspěšně uloženy.');
             $this->memberService->save($member);
+            $this->addFlash('success', 'Změny byly úspěšně uloženy.');
             return $this->redirectToRoute('app_settings');
         }
 
