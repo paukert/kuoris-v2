@@ -19,6 +19,7 @@ class CategoryType extends AbstractType
             ])
             ->add('orisId', IntegerType::class, [
                 'label' => 'ORIS ID',
+                'required' => false,
             ]);
     }
 

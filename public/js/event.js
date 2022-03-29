@@ -8,16 +8,26 @@ const addCategoryField = (addSelectedValue) => {
         input.setAttribute('value', categoriesSelect.options[categoriesSelect.selectedIndex].text);
     }
 
-    item.appendChild(deleteCategoryButton.cloneNode(true));
-
+    addDeleteCategoryButton(item);
     categoriesHolder.appendChild(item);
     categories.dataset.index++;
 };
 
+const addDeleteCategoryButton = (item) => {
+    const deleteCategoryButton = document.createElement('button');
+    deleteCategoryButton.setAttribute('type', 'button');
+    deleteCategoryButton.classList.add('btn', 'btn-danger', 'btn-sm');
+    deleteCategoryButton.innerText = 'Smazat';
+
+    deleteCategoryButton.addEventListener('click', () => item.remove());
+    item.appendChild(deleteCategoryButton);
+}
+
 const categories = document.getElementById('categories');
 const categoriesHolder = document.getElementById('categoriesHolder');
 const categoriesSelect = document.getElementById('event_categoriesInDatabase');
-const deleteCategoryButton = document.querySelector('.delete-category');
+
+categoriesHolder.querySelectorAll('.category').forEach((category) => addDeleteCategoryButton(category));
 
 document.getElementById('addNewCategory').addEventListener('click', () => addCategoryField(false));
 document.getElementById('addExistingCategory').addEventListener('click', () => addCategoryField(true));

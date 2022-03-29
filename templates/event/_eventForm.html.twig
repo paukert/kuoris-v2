@@ -16,9 +16,8 @@
      data-prototype="{{ form_widget(form.categories.vars.prototype) | e('html_attr') }}">
     <div id="categoriesHolder" class="row">
         {% for category in form.categories %}
-            <div class="col-6 col-sm-4 col-md-3 col-xl-2 border p-2">
+            <div class="col-6 col-sm-4 col-md-3 col-xl-2 border p-2 category">
                 {{ form_widget(category) }}
-                <button type="button" class="btn btn-danger btn-sm delete-category">Smazat</button>
             </div>
         {% endfor %}
     </div>
