@@ -3,6 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Category;
+use App\Entity\Discipline;
 use App\Entity\Event;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -42,6 +43,10 @@ class EventType extends AbstractType
                 'label' => 'Zrušeno',
                 'required' => false,
             ])
+            ->add('discipline', EntityType::class, [
+                'label' => 'Disciplína',
+                'class' => Discipline::class,
+            ])
             ->add('categoriesInDatabase', EntityType::class, [
                 'label' => 'Existující kategorie',
                 'class' => Category::class,
@@ -51,7 +56,6 @@ class EventType extends AbstractType
                         ->where('categories.orisId IS NULL')
                         ->orderBy('categories.name', 'ASC');
                 },
-                'choice_label' => fn(Category $category) => $category->getName(),
             ])
             ->add('categories', CollectionType::class, [
                 'label' => 'Kategorie',
