@@ -82,7 +82,11 @@ class EventController extends AbstractController
         $entryForm->handleRequest($request);
         if ($entryForm->isSubmitted() && $entryForm->isValid()) {
             if (!$this->isGranted(EventVoter::EDIT_ENTRY, $event)) {
-                $this->addFlash('danger', 'Termín přihlášek již vypršel. Pro přihlášení (úpravu přihlášky) po termínu kontaktuj co nejdříve <a href="mailto:kamil.koblizek@seznam.cz">Kamila</a>.');
+                if ($event->getIsCancelled()) {
+                    $this->addFlash('danger', 'Událost byla zrušena. Přihlášení (úprava přihlášky) není možná.');
+                } else {
+                    $this->addFlash('danger', 'Termín přihlášek již vypršel. Pro přihlášení (úpravu přihlášky) po termínu kontaktuj co nejdříve <a href="mailto:kamil.koblizek@seznam.cz">Kamila</a>.');
+                }
                 return $this->redirectToRoute('event_detail', ['id' => $event->getId(), '_fragment' => 'top']);
             }
 

@@ -24,6 +24,7 @@ class EventRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('e')
             ->andWhere('e.entryDeadline >= :now')
+            ->andWhere('e.isCancelled = false')
             ->setParameter('now', new \DateTime())
             ->orderBy('e.entryDeadline', 'ASC')
             ->setMaxResults($maxResults);

@@ -16,7 +16,9 @@
         {% for event in events %}
             <tr data-collapsed="true">
                 <td class="date"><span class="arrow fa-solid fa-angle-down"></span>{{ event.date | date('d. m. Y') }}</td>
-                <td><a href="{{ path('event_detail', { id: event.id }) }}">{{ event.name | u.truncate(30, '...') }}</a></td>
+                <td {{ event.isCancelled ? 'class="text-decoration-line-through"' : '' }}>
+                    <a href="{{ path('event_detail', { id: event.id }) }}">{{ event.name | u.truncate(30, '...') }}</a>
+                </td>
                 {% if event.level is defined %}
                     <td class="level d-none d-lg-table-cell"><abbr title="{{ event.level.name }}">{{ event.level.abbr }}</abbr></td>
                 {% endif %}

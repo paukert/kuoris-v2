@@ -51,6 +51,10 @@ class EventVoter extends Voter
     private function canEditEntry(Event $event): bool
     {
         // TODO: pridat impersonaci
+        if ($event->getIsCancelled()) {
+            return false;
+        }
+
         return $this->security->isGranted(Member::ROLE_ADMIN)
             || $event->getEntryDeadline() > new DateTime('now');
     }

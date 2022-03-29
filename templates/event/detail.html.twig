@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% set closedEntries = event.entryDeadline < date('now') %}
+{% set closedEntries = event.entryDeadline < date('now') or event.isCancelled %}
 
 {% block title %}{{ event.name }}{% endblock %}
 
@@ -21,6 +21,9 @@
         </div>
     </div>
 
+    {% if event.isCancelled %}
+        <div class="alert alert-warning">Událost byla zrušena.</div>
+    {% endif %}
     <h1>{{ event.name }}</h1>
     <h2>Informace</h2>
     <hr>
