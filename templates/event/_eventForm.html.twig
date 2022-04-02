@@ -27,8 +27,10 @@
 {# already existing organizers (in database) which could be added to organizers collection #}
 {{ form_row(form.organizersInDatabase) }}
 
-<button id="addExistingOrganizer" class="btn btn-primary" type="button">Přidat vybraného organizátora</button>
-<button id="addNewOrganizer" class="btn btn-primary" type="button">Přidat nového organizátora</button>
+<div class="mb-3">
+    <button id="addExistingOrganizer" class="btn btn-primary" type="button">Přidat vybraného organizátora</button>
+    <button id="addNewOrganizer" class="btn btn-primary" type="button">Přidat nového organizátora</button>
+</div>
 
 <h2>Kategorie</h2>
 
@@ -47,5 +49,18 @@
 {# already existing categories (in database) which could be added to categories collection #}
 {{ form_row(form.categoriesInDatabase) }}
 
-<button id="addExistingCategory" class="btn btn-primary" type="button">Přidat vybranou kategorii</button>
-<button id="addNewCategory" class="btn btn-primary" type="button">Přidat novou kategorii</button>
+<div class="mb-3">
+    <button id="addExistingCategory" class="btn btn-primary" type="button">Přidat vybranou kategorii</button>
+    <button id="addNewCategory" class="btn btn-primary" type="button">Přidat novou kategorii</button>
+</div>
+
+<h2>Doplňující informace</h2>
+
+{# if maxCapacity is defined --> training event, if it is not defined --> race event #}
+{% if form.maxCapacity is defined %}
+    {{ form_row(form.maxCapacity) }}
+{% else %}
+    {{ form_row(form.orisId) }}
+    {{ form_row(form.autoUpdate) }}
+    {{ form_row(form.website) }}
+{% endif %}

@@ -10,7 +10,8 @@ use App\Entity\Race;
 use App\Entity\Training;
 use App\Form\Type\CommentType;
 use App\Form\Type\EntryType;
-use App\Form\Type\EventType;
+use App\Form\Type\RaceType;
+use App\Form\Type\TrainingType;
 use App\Security\CommentVoter;
 use App\Security\EventVoter;
 use App\Service\CategoryService;
@@ -54,7 +55,7 @@ class EventController extends AbstractController
     #[Route('/admin/events/{id}', name: 'edit_event')]
     public function edit(Event $event, Request $request): Response
     {
-        $form = $this->createForm(EventType::class, $event);
+        $form = $this->createForm($event->isRace() ? RaceType::class : TrainingType::class, $event);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

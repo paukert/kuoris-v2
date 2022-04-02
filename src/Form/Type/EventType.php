@@ -28,6 +28,7 @@ class EventType extends AbstractType
             ->add('date', DateTimeType::class, [
                 'label' => 'Datum a čas začátku události',
                 'widget' => 'single_text',
+                'with_seconds' => true,
             ])
             ->add('location', TextType::class, [
                 'label' => 'Místo (adresa)',
@@ -35,6 +36,7 @@ class EventType extends AbstractType
             ->add('entryDeadline', DateTimeType::class, [
                 'label' => 'Uzávěrka přihlášek',
                 'widget' => 'single_text',
+                'with_seconds' => true,
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Další popis',
