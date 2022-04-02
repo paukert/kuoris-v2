@@ -61,6 +61,7 @@ abstract class Event
     #[ORM\ManyToMany(targetEntity: Organizer::class, inversedBy: 'events', cascade: ['persist'])]
     #[Assert\Count(min: 1)]
     #[Assert\Type(type: Collection::class)]
+    #[Assert\Valid]
     private $organizers;
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Entry::class)]
@@ -74,6 +75,7 @@ abstract class Event
     #[ORM\ManyToMany(targetEntity: Category::class, cascade: ['persist'])]
     #[ORM\OrderBy(['name' => 'ASC'])]
     #[Assert\Type(type: Collection::class)]
+    #[Assert\Valid]
     private $categories;
 
     abstract public function isRace(): bool;
