@@ -13,9 +13,12 @@ use App\Form\Type\EntryType;
 use App\Form\Type\EventType;
 use App\Security\CommentVoter;
 use App\Security\EventVoter;
+use App\Service\CategoryService;
 use App\Service\CommentService;
 use App\Service\EntryService;
 use App\Service\EventService;
+use App\Service\OrganizerService;
+use App\Service\OrisService;
 use DateTime;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,15 +28,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EventController extends AbstractController
 {
+    private CategoryService $categoryService;
     private CommentService $commentService;
     private EntryService $entryService;
     private EventService $eventService;
+    private OrganizerService $organizerService;
+    private OrisService $orisService;
 
-    public function __construct(CommentService $commentService, EntryService $entryService, EventService $eventService)
-    {
+    public function __construct(
+        CategoryService $categoryService,
+        CommentService $commentService,
+        EntryService $entryService,
+        EventService $eventService,
+        OrganizerService $organizerService,
+        OrisService $orisService
+    ) {
+        $this->categoryService = $categoryService;
         $this->commentService = $commentService;
         $this->entryService = $entryService;
         $this->eventService = $eventService;
+        $this->organizerService = $organizerService;
+        $this->orisService = $orisService;
     }
 
     #[Route('/admin/events/{id}', name: 'edit_event')]
@@ -43,6 +58,7 @@ class EventController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->fixSubmittedData($event);
             $this->eventService->save($event);
             $this->addFlash('success', 'Událost byla úspěšně upravena.');
             return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
@@ -145,5 +161,36 @@ class EventController extends AbstractController
             'excludePastEvents' => $excludePastEvents,
             'hint' => $hint,
         ]);
+    }
+
+    /**
+     * Use already persisted entities in database to avoid duplicity records
+     *
+     * TODO rework
+     */
+    private function fixSubmittedData(Event &$event): void
+    {
+        $persistedOrganizers = $this->organizerService->getAll();
+        $organizers = $event->getOrganizers();
+        foreach ($organizers as $organizer) {
+            foreach ($persistedOrganizers as $persistedOrganizer) {
+                if ($organizer->getName() === $persistedOrganizer->getName()) {
+                    $event->removeOrganizer($organizer);
+                    $event->addOrganizer($persistedOrganizer);
+                }
+            }
+        }
+
+        $persistedCategories = $this->categoryService->getAll();
+        $categories = $event->getCategories();
+        foreach ($categories as $category) {
+            foreach ($persistedCategories as $persistedCategory) {
+                if ($category->getName() === $persistedCategory->getName()
+                    && $category->getOrisId() === $persistedCategory->getOrisId()) {
+                    $event->removeCategory($category);
+                    $event->addCategory($persistedCategory);
+                }
+            }
+        }
     }
 }

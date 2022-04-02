@@ -25,4 +25,12 @@ class OrganizerService
 
         return $organizer;
     }
+
+    /**
+     * @return Organizer[]
+     */
+    public function getAll(): array
+    {
+        return $this->organizerRepository->findAll();
+    }
 }

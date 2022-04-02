@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Entity\Category;
 use App\Entity\Discipline;
 use App\Entity\Event;
+use App\Entity\Organizer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,6 +47,23 @@ class EventType extends AbstractType
             ->add('discipline', EntityType::class, [
                 'label' => 'Disciplína',
                 'class' => Discipline::class,
+            ])
+            ->add('organizersInDatabase', EntityType::class, [
+                'label' => 'Existující organizátoři',
+                'class' => Organizer::class,
+                'mapped' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('organizers')
+                        ->orderBy('organizers.name', 'ASC');
+                },
+            ])
+            ->add('organizers', CollectionType::class, [
+                'label' => 'Organizátoři',
+                'entry_type' => OrganizerType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
             ])
             ->add('categoriesInDatabase', EntityType::class, [
                 'label' => 'Existující kategorie',

@@ -98,6 +98,9 @@ class Discipline
 
     public function __toString(): string
     {
-        return $this->getName() . ' (' . $this->getAbbr() . ')';
+        if ($this->getName() && $this->getAbbr()) {
+            return $this->getName() . ' (' . $this->getAbbr() . ')';
+        }
+        return 'Neznámá disciplína';;
     }
 }

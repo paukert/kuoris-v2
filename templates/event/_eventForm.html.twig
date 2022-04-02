@@ -1,5 +1,7 @@
 {{ form_errors(form) }}
 
+<h2>Základní informace</h2>
+
 {{ form_row(form.name) }}
 {{ form_row(form.date) }}
 {{ form_row(form.location) }}
@@ -8,19 +10,42 @@
 {{ form_row(form.isCancelled) }}
 {{ form_row(form.discipline) }}
 
-{# Already existing categories (in database) which could be added to categories collection #}
-{{ form_row(form.categoriesInDatabase) }}
-<button id="addExistingCategory" class="btn btn-primary" type="button">Přidat kategorii</button>
+<h2>Organizátoři</h2>
+
+<div id="organizers" class="my-4 container-fluid"
+     data-index="{{ form.organizers | length > 0 ? form.organizers | last.vars.name + 1 : 0 }}"
+     data-prototype="{{ form_widget(form.organizers.vars.prototype) | e('html_attr') }}">
+    <div id="organizersHolder" class="row">
+        {% for organizer in form.organizers %}
+            <div class="col-6 col-sm-4 col-md-3 border p-3 organizer">
+                {{ form_widget(organizer) }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{# already existing organizers (in database) which could be added to organizers collection #}
+{{ form_row(form.organizersInDatabase) }}
+
+<button id="addExistingOrganizer" class="btn btn-primary" type="button">Přidat vybraného organizátora</button>
+<button id="addNewOrganizer" class="btn btn-primary" type="button">Přidat nového organizátora</button>
+
+<h2>Kategorie</h2>
 
 <div id="categories" class="my-4 container-fluid"
      data-index="{{ form.categories | length > 0 ? form.categories | last.vars.name + 1 : 0 }}"
      data-prototype="{{ form_widget(form.categories.vars.prototype) | e('html_attr') }}">
     <div id="categoriesHolder" class="row">
         {% for category in form.categories %}
-            <div class="col-6 col-sm-4 col-md-3 col-xl-2 border p-2 category">
+            <div class="col-6 col-sm-4 col-md-3 col-xl-2 border p-3 category">
                 {{ form_widget(category) }}
             </div>
         {% endfor %}
     </div>
 </div>
-<button id="addNewCategory" class="btn btn-primary" type="button">Přidat kategorii</button>
+
+{# already existing categories (in database) which could be added to categories collection #}
+{{ form_row(form.categoriesInDatabase) }}
+
+<button id="addExistingCategory" class="btn btn-primary" type="button">Přidat vybranou kategorii</button>
+<button id="addNewCategory" class="btn btn-primary" type="button">Přidat novou kategorii</button>

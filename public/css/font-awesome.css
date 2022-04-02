@@ -55,3 +55,7 @@
 .fa-trash-can::before {
     content: "\f2ed";
 }
+
+.fa-xmark::before {
+    content: "\f00d";
+}
