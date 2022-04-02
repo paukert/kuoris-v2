@@ -60,6 +60,7 @@
 {% if form.maxCapacity is defined %}
     {{ form_row(form.maxCapacity) }}
 {% else %}
+    {{ form_row(form.level) }}
     {{ form_row(form.orisId) }}
     {{ form_row(form.autoUpdate) }}
     {{ form_row(form.website) }}

@@ -2,7 +2,9 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Level;
 use App\Entity\Race;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -16,6 +18,10 @@ class RaceType extends EventType
         parent::buildForm($builder, $options);
 
         return $builder
+            ->add('level', EntityType::class, [
+                'label' => 'Typ',
+                'class' => Level::class,
+            ])
             ->add('orisId', IntegerType::class, [
                 'label' => 'ORIS ID',
                 'help' => 'Vyplnit pouze v případě, že je závod zadaný systému ORIS',

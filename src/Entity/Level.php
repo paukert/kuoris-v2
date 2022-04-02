@@ -95,4 +95,12 @@ class Level
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        if ($this->getName() && $this->getAbbr()) {
+            return $this->getName() . ' (' . $this->getAbbr() . ')';
+        }
+        return 'Neznámý typ závodu';
+    }
 }
