@@ -7,8 +7,12 @@ const addNewField = (items, itemsHolder, itemsSelect, groupName, addSelectedValu
     item.innerHTML = items.dataset.prototype.replace(/__name__/g, items.dataset.index);
 
     if (addSelectedValue) {
-        let input = item.querySelector('#event_' + groupName + '_' + items.dataset.index + '_name');
+        let input = item.getElementsByTagName('input').item(0);
         input.setAttribute('value', itemsSelect.options[itemsSelect.selectedIndex].text);
+    }
+
+    if (items.dataset.index === '0') {
+        itemsHolder.getElementsByTagName('p').item(0).remove();
     }
 
     addXMark(item);
@@ -32,7 +36,7 @@ const addXMark = (item) => {
 // Categories management
 const categories = document.getElementById('categories');
 const categoriesHolder = document.getElementById('categoriesHolder');
-const categoriesSelect = document.getElementById('event_categoriesInDatabase');
+const categoriesSelect = document.querySelector('.categoriesSelect');
 
 categoriesHolder.querySelectorAll('.category').forEach((category) => addXMark(category));
 
@@ -49,7 +53,7 @@ document.getElementById('addExistingCategory').addEventListener(
 // Organizers management
 const organizers = document.getElementById('organizers');
 const organizersHolder = document.getElementById('organizersHolder');
-const organizersSelect = document.getElementById('event_organizersInDatabase');
+const organizersSelect = document.querySelector('.organizersSelect');
 
 organizersHolder.querySelectorAll('.organizer').forEach((organizer) => addXMark(organizer));
 

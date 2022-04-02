@@ -16,11 +16,16 @@
      data-index="{{ form.organizers | length > 0 ? form.organizers | last.vars.name + 1 : 0 }}"
      data-prototype="{{ form_widget(form.organizers.vars.prototype) | e('html_attr') }}">
     <div id="organizersHolder" class="row">
-        {% for organizer in form.organizers %}
-            <div class="col-6 col-sm-4 col-md-3 border p-3 organizer">
-                {{ form_widget(organizer) }}
-            </div>
-        {% endfor %}
+        {% if form.organizers is empty %}
+            {{ form_widget(form.organizers) }}
+            <p class="px-0">Pokračuj přidáním nového organizátora</p>
+        {% else %}
+            {% for organizer in form.organizers %}
+                <div class="col-6 col-sm-4 col-md-3 border p-3 organizer">
+                    {{ form_widget(organizer) }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 
@@ -38,11 +43,16 @@
      data-index="{{ form.categories | length > 0 ? form.categories | last.vars.name + 1 : 0 }}"
      data-prototype="{{ form_widget(form.categories.vars.prototype) | e('html_attr') }}">
     <div id="categoriesHolder" class="row">
-        {% for category in form.categories %}
-            <div class="col-6 col-sm-4 col-md-3 col-xl-2 border p-3 category">
-                {{ form_widget(category) }}
-            </div>
-        {% endfor %}
+        {% if form.categories is empty %}
+            {{ form_widget(form.categories) }}
+            <p class="px-0">Pokračuj přidáním nové kategorie</p>
+        {% else %}
+            {% for category in form.categories %}
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2 border p-3 category">
+                    {{ form_widget(category) }}
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 

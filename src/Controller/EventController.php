@@ -25,6 +25,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EventController extends AbstractController
@@ -50,6 +51,31 @@ class EventController extends AbstractController
         $this->eventService = $eventService;
         $this->organizerService = $organizerService;
         $this->orisService = $orisService;
+    }
+
+    #[Route('/admin/{type}/create', name: 'create_event')]
+    public function create(string $type, Request $request): Response
+    {
+        $eventType = match ($type) {
+            'race' => RaceType::class,
+            'training' => TrainingType::class,
+            default => throw new NotFoundHttpException(),
+        };
+
+        $form = $this->createForm($eventType);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event = $form->getData();
+            $this->fixSubmittedData($event);
+            $this->eventService->save($event);
+            $this->addFlash('success', 'Událost byla úspěšně přidána.');
+            return $this->redirectToRoute('event_detail', ['id' => $event->getId()]);
+        }
+
+        return $this->renderForm('event/create.html.twig', [
+            'form' => $form,
+        ]);
     }
 
     #[Route('/admin/events/{id}', name: 'edit_event')]

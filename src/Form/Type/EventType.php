@@ -51,13 +51,14 @@ class EventType extends AbstractType
                 'class' => Discipline::class,
             ])
             ->add('organizersInDatabase', EntityType::class, [
-                'label' => 'Existující organizátoři',
+                'label' => 'Existující organizátoři v systému',
                 'class' => Organizer::class,
                 'mapped' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('organizers')
                         ->orderBy('organizers.name', 'ASC');
                 },
+                'attr' => ['class' => 'organizersSelect'],
             ])
             ->add('organizers', CollectionType::class, [
                 'label' => 'Organizátoři',
@@ -68,7 +69,7 @@ class EventType extends AbstractType
                 'allow_delete' => true,
             ])
             ->add('categoriesInDatabase', EntityType::class, [
-                'label' => 'Existující kategorie',
+                'label' => 'Existující kategorie v systému',
                 'class' => Category::class,
                 'mapped' => false,
                 'query_builder' => function (EntityRepository $er) {
@@ -76,6 +77,7 @@ class EventType extends AbstractType
                         ->where('categories.orisId IS NULL')
                         ->orderBy('categories.name', 'ASC');
                 },
+                'attr' => ['class' => 'categoriesSelect'],
             ])
             ->add('categories', CollectionType::class, [
                 'label' => 'Kategorie',

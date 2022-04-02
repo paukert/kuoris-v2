@@ -17,7 +17,7 @@ class TrainingType extends EventType
         return $builder
             ->add('maxCapacity', IntegerType::class, [
                 'label' => 'Maximální kapacita',
-                'help' => 'Pro neomezenou kapacitu nechte políčko prázdné',
+                'help' => 'Pro neomezenou kapacitu nech políčko prázdné',
                 'required' => false,
             ]);
     }
