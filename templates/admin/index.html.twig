@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Administrace{% endblock %}
+
+{% block content %}
+    <div class="max-width-800">
+        <h1 class="mb-3 text-center">Administrace</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.events) }}
+        <div class="mb-5">
+            {{ form_widget(form.editEvent) }}
+            {{ form_widget(form.addTraining) }}
+            {{ form_widget(form.addRace) }}
+        </div>
+        {{ form_row(form.members) }}
+        {{ form_widget(form.editMember) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

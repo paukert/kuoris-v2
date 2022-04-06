@@ -60,9 +60,13 @@
                             {% endif %}
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Administrace</a>
-                            </li>
+                            {% if app.request.attributes.get('_route') == 'app_admin' %}
+                                <a class="nav-link active" aria-current="page" href="#">Administrace</a>
+                            {% elseif app.request.attributes.get('_route') in ['create_event', 'edit_event', 'edit_member'] %}
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_admin') }}">Administrace</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('app_admin') }}">Administrace</a>
+                            {% endif %}
                         {% endif %}
                     </ul>
                     <ul class="navbar-nav ms-auto">

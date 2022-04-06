@@ -297,4 +297,9 @@ abstract class Event
     {
         return array_filter($this->getEntries()->toArray(), fn(Entry $entry) => $entry->getCar());
     }
+
+    public function __toString(): string
+    {
+        return $this->getName() ?? 'Neznámé jméno události';
+    }
 }

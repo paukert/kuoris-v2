@@ -363,4 +363,9 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return null;
     }
+
+    public function __toString(): string
+    {
+        return $this->getName() ?? 'Neznámé jméno člena';
+    }
 }
