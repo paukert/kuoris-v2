@@ -12,10 +12,26 @@
                     <h5 class="modal-title" id="modalLabel">Potvrzení</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zrušit"></button>
                 </div>
-                <div class="modal-body">Chceš se opravdu odhlásit z události?</div>
+                <div class="modal-body">Chceš se opravdu odhlásit z události &bdquo;{{ event.name }}&ldquo;?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zrušit</button>
                     <button type="button" class="btn btn-danger" id="deleteEntryConfirmBtn">Odhlásit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteCommentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Potvrzení</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zrušit"></button>
+                </div>
+                <div class="modal-body">Chceš opravdu odstranit komentář?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zrušit</button>
+                    <button type="button" class="btn btn-danger" id="deleteCommentConfirmBtn">Odstranit</button>
                 </div>
             </div>
         </div>
@@ -144,7 +160,7 @@
                             </a>
                         {% endif %}
                         {% if is_granted('DELETE_COMMENT', comment) %}
-                            <a href="{{ path('comment_delete', { id: comment.id }) }}">
+                            <a href="#" class="deleteCommentLink" data-comment-text="{{ comment.text }}" data-delete-link="{{ path('comment_delete', { id: comment.id }) }}">
                                 <span class="fa-solid fa-trash-can"></span>
                             </a>
                         {% endif %}
@@ -172,5 +188,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ asset('js/entry-delete-confirmation.js') }}" defer></script>
+    <script src="{{ asset('js/delete-confirmation.js') }}" defer></script>
 {% endblock %}
