@@ -76,6 +76,12 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
+                                    <a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">
+                                        Stav konta: {{ app.user.bankBalance is not null ? app.user.bankBalance ~ ' Kč' : 'neznámý' }}
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
                                     {% if app.request.attributes.get('_route') == 'app_settings' %}
                                         <a class="dropdown-item" href="#">Nastavení</a>
                                     {% else %}

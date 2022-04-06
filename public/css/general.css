@@ -66,6 +66,10 @@ hr {
     text-decoration-color: #f76d22;
     text-decoration-thickness: 0.1rem;
 }
+
+.dropdown-menu {
+    min-width: 200px;
+}
 /* End - Navbar * /
 
 /* Tables */
