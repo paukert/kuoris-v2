@@ -10,6 +10,7 @@ use App\Entity\Race;
 use App\Entity\Training;
 use App\Form\Type\CommentType;
 use App\Form\Type\EntryType;
+use App\Form\Type\OrisImportType;
 use App\Form\Type\RaceType;
 use App\Form\Type\TrainingType;
 use App\Security\CommentVoter;
@@ -62,7 +63,19 @@ class EventController extends AbstractController
             default => throw new NotFoundHttpException(),
         };
 
-        $form = $this->createForm($eventType);
+        if ($eventType === RaceType::class) {
+            $orisImportForm = $this->createForm(OrisImportType::class);
+            $orisImportForm->handleRequest($request);
+            if ($orisImportForm->isSubmitted() && $orisImportForm->isValid()) {
+                $orisId = $orisImportForm->get('orisId')->getViewData();
+                $race = $this->orisService->getRace($orisId);
+                if (!$race) {
+                    $this->addFlash('danger', 'Import závodu se nezdařil. Zkontroluj zadané ORIS ID a případně kontaktuj administrátora.');
+                }
+            }
+        }
+
+        $form = $this->createForm($eventType, $race ?? null);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,6 +88,7 @@ class EventController extends AbstractController
 
         return $this->renderForm('event/create.html.twig', [
             'form' => $form,
+            'orisImportForm' => $orisImportForm ?? null,
         ]);
     }
 
