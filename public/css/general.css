@@ -70,6 +70,10 @@ hr {
 .dropdown-menu {
     min-width: 200px;
 }
+
+.bank-balance {
+    color: #212529 !important;
+}
 /* End - Navbar * /
 
 /* Tables */
