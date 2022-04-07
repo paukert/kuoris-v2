@@ -9,8 +9,8 @@
         {{ form_row(form.events) }}
         <div class="mb-5">
             {{ form_widget(form.editEvent, {'attr': {'class': 'btn-primary btn mb-2'}}) }}
-            {{ form_widget(form.addTraining, {'attr': {'class': 'btn-primary btn mb-2'}}) }}
-            {{ form_widget(form.addRace, {'attr': {'class': 'btn-primary btn mb-2'}}) }}
+            <a href="{{ path('create_event', {'type': 'training'}) }}" class="btn-primary btn mb-2">Přidat nový trénink</a>
+            <a href="{{ path('create_event', {'type': 'race'}) }}" class="btn-primary btn mb-2">Přidat nový závod</a>
         </div>
         {{ form_row(form.members) }}
         {{ form_widget(form.editMember) }}

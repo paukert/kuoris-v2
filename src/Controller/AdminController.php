@@ -21,10 +21,6 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('editEvent')->isClicked()) {
                 return $this->redirectToRoute('edit_event', ['id' => $form->get('events')->getViewData()]);
-            } elseif ($form->get('addTraining')->isClicked()) {
-                return $this->redirectToRoute('create_event', ['type' => 'training']);
-            } elseif ($form->get('addRace')->isClicked()) {
-                return $this->redirectToRoute('create_event', ['type' => 'race']);
             } elseif ($form->get('editMember')->isClicked()) {
                 return $this->redirectToRoute('edit_member', ['id' => $form->get('members')->getViewData()]);
             } else {

@@ -28,12 +28,6 @@ class Admin extends AbstractType
             ->add('editEvent', SubmitType::class, [
                 'label' => 'Upravit vybranou událost',
             ])
-            ->add('addTraining', SubmitType::class, [
-                'label' => 'Přidat nový trénink',
-            ])
-            ->add('addRace', SubmitType::class, [
-                'label' => 'Přidat nový závod',
-            ])
             ->add('members', EntityType::class, [
                 'label' => 'Členové',
                 'class' => Member::class,
