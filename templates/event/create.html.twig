@@ -1,8 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Přidat událost{% endblock %}
+{% block title %}Přidání události{% endblock %}
 
 {% block content %}
+    <h1 class="mb-3 text-center">Přidání události</h1>
     {% if orisImportForm is not null %}
         <h2>Integrace s ORIS</h2>
         {{ form_start(orisImportForm) }}

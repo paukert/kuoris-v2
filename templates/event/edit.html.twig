@@ -1,8 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Upravit událost{% endblock %}
+{% block title %}Úprava události{% endblock %}
 
 {% block content %}
+    <h1 class="mb-3 text-center">Úprava události</h1>
     {{ form_start(form) }}
     {% include 'event/_eventForm.html.twig' with {
         'form': form
