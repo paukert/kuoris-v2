@@ -118,6 +118,10 @@
 </header>
 
 <main {{ app.request.attributes.get('_route') == 'app_landing' ? 'style="align-self: center;"' : '' }}>
+    <noscript>
+        <div class="alert alert-warning">Prohlížeč nemá povolený JavaScript. Stránky nemusí fungovat dle očekávání.</div>
+    </noscript>
+
     {% for type, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
