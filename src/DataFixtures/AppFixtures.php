@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Factory\AnnouncementFactory;
 use App\Factory\CategoryFactory;
 use App\Factory\CommentFactory;
-use App\Factory\CompetitionFactory;
 use App\Factory\DisciplineFactory;
 use App\Factory\EntryFactory;
 use App\Factory\LevelFactory;
@@ -31,18 +30,14 @@ class AppFixtures extends Fixture
         // Add organizers
         OrganizerFactory::createMany(5);
 
-        // Add competitions
-        CompetitionFactory::createMany(10);
-
         // Add categories
-        CategoryFactory::createMany(25);
+        CategoryFactory::createMany(20);
 
         // Add races
         RaceFactory::createMany(
-            100,
+            40,
             fn() => [
-                'categories' => CategoryFactory::randomRange(15, 25),
-                'competitions' => CompetitionFactory::randomRange(1, 3),
+                'categories' => CategoryFactory::randomRange(10, 20),
                 'discipline' => DisciplineFactory::random(),
                 'organizers' => OrganizerFactory::randomRange(1, 2),
                 'level' => LevelFactory::random(),
@@ -51,17 +46,17 @@ class AppFixtures extends Fixture
 
         // Add trainings
         TrainingFactory::createMany(
-            100,
+            20,
             fn() => [
-                'categories' => CategoryFactory::randomRange(15, 25),
+                'categories' => CategoryFactory::randomRange(5, 10),
                 'discipline' => DisciplineFactory::random(),
-                'organizers' => OrganizerFactory::randomRange(1, 2),
+                'organizers' => OrganizerFactory::randomRange(1, 1),
             ]
         );
 
         // Add members
-        MemberFactory::createOne(['registration' => 'KUO9801', 'isActive' => true]);
-        MemberFactory::createMany(20);
+        MemberFactory::createOne(['registration' => 'KUO9801', 'roles' => ["ROLE_ADMIN"], 'isActive' => true]);
+        MemberFactory::createMany(10);
 
         // Add announcements
         AnnouncementFactory::createMany(
@@ -73,7 +68,7 @@ class AppFixtures extends Fixture
 
         // Add comments
         CommentFactory::createMany(
-            15,
+            30,
             fn() => [
                 'event' => RaceFactory::random(),
                 'member' => MemberFactory::random(),
@@ -84,7 +79,7 @@ class AppFixtures extends Fixture
         foreach (MemberFactory::all() as $member) {
             $events = array_merge(RaceFactory::all(), TrainingFactory::all());
             shuffle($events);
-            $memberEntriesCount = faker()->numberBetween(0, count($events) / 2);
+            $memberEntriesCount = faker()->numberBetween(0, count($events) / 3);
             for ($i = 0; $i < $memberEntriesCount; $i++) {
                 EntryFactory::createOne([
                     'category' => CategoryFactory::random(),

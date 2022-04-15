@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\RaceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,11 +25,6 @@ class Race extends Event
     #[Assert\Url]
     private $website;
 
-    #[ORM\ManyToMany(targetEntity: Competition::class, mappedBy: 'races', cascade: ['persist'])]
-    #[Assert\Type(type: Collection::class)]
-    #[Assert\Valid]
-    private $competitions;
-
     #[ORM\ManyToOne(targetEntity: Level::class, cascade: ['persist'], inversedBy: 'races')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
@@ -41,7 +34,6 @@ class Race extends Event
     public function __construct()
     {
         parent::__construct();
-        $this->competitions = new ArrayCollection();
     }
 
     public function getOrisId(): ?int
@@ -79,33 +71,6 @@ class Race extends Event
     public function setWebsite(?string $website): self
     {
         $this->website = $website;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Competition>
-     */
-    public function getCompetitions(): Collection
-    {
-        return $this->competitions;
-    }
-
-    public function addCompetition(Competition $competition): self
-    {
-        if (!$this->competitions->contains($competition)) {
-            $this->competitions[] = $competition;
-            $competition->addRace($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompetition(Competition $competition): self
-    {
-        if ($this->competitions->removeElement($competition)) {
-            $competition->removeRace($this);
-        }
 
         return $this;
     }
