@@ -21,12 +21,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // Add disciplines
-        DisciplineFactory::createMany(4);
-
-        // Add levels
-        LevelFactory::createMany(6);
-
         // Add organizers
         OrganizerFactory::createMany(5);
 
@@ -55,7 +49,6 @@ class AppFixtures extends Fixture
         );
 
         // Add members
-        MemberFactory::createOne(['registration' => 'KUO9801', 'roles' => ["ROLE_ADMIN"], 'isActive' => true]);
         MemberFactory::createMany(10);
 
         // Add announcements
