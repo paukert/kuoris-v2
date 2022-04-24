@@ -25,6 +25,7 @@ class SendEntriesType extends AbstractType
                         ->setParameter('now', new \DateTime('now'))
                         ->orderBy('e.name', 'ASC');
                 },
+                'placeholder' => 'Vyber závod',
             ])
             ->add('username', TextType::class, [
                 'label' => 'Uživatelské jméno do IS ORIS',

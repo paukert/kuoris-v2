@@ -5,25 +5,30 @@
 {% block content %}
     <div class="max-width-800">
         <h1 class="mb-3 text-center">Administrace</h1>
-        {{ form_start(form) }}
-        {{ form_row(form.events) }}
-        <div class="mb-5">
-            {{ form_widget(form.editEvent, {'attr': {'class': 'btn-primary btn mb-2'}}) }}
+        <h2>Správa událostí</h2>
+        <section class="mb-4">
+            {{ form_start(chooseEventForm) }}
+            {{ form_row(chooseEventForm.events) }}
+            <button type="submit" class="btn-primary btn mb-2">Upravit vybranou událost</button>
             <a href="{{ path('create_event', {'type': 'training'}) }}" class="btn-primary btn mb-2">Přidat nový trénink</a>
             <a href="{{ path('create_event', {'type': 'race'}) }}" class="btn-primary btn mb-2">Přidat nový závod</a>
-        </div>
-
-        <div class="mb-5">
-            {{ form_row(form.members) }}
-            {{ form_row(form.editMember) }}
-        </div>
-        {{ form_end(form) }}
-
-        {{ form_start(sendEntriesForm) }}
-        {{ form_row(sendEntriesForm.racesInOris) }}
-        {{ form_row(sendEntriesForm.username) }}
-        {{ form_row(sendEntriesForm.password) }}
-        <button type="submit" class="btn-primary btn">Odeslat přihlášky</button>
-        {{ form_end(sendEntriesForm) }}
+            {{ form_end(chooseEventForm) }}
+        </section>
+        <h2>Správa členů</h2>
+        <section class="mb-4">
+            {{ form_start(chooseMemberForm) }}
+            {{ form_row(chooseMemberForm.members) }}
+            <button type="submit" class="btn-primary btn mb-2">Upravit vybraného člena</button>
+            {{ form_end(chooseMemberForm) }}
+        </section>
+        <h2>Synchronizace s IS ORIS</h2>
+        <section class="mb-4">
+            {{ form_start(sendEntriesForm) }}
+            {{ form_row(sendEntriesForm.racesInOris) }}
+            {{ form_row(sendEntriesForm.username) }}
+            {{ form_row(sendEntriesForm.password) }}
+            <button type="submit" class="btn-primary btn">Odeslat přihlášky</button>
+            {{ form_end(sendEntriesForm) }}
+        </section>
     </div>
 {% endblock %}

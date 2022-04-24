@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Form\Admin;
+use App\Form\Type\ChooseEventType;
+use App\Form\Type\ChooseMemberType;
 use App\Form\Type\SendEntriesType;
 use App\Service\OrisService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,21 +25,19 @@ class AdminController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $form = $this->createForm(Admin::class);
+        $chooseEventForm = $this->createForm(ChooseEventType::class);
+        $chooseEventForm->handleRequest($request);
+        if ($chooseEventForm->isSubmitted() && $chooseEventForm->isValid()) {
+            return $this->redirectToRoute('edit_event', ['id' => $chooseEventForm->get('events')->getViewData()]);
+        }
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('editEvent')->isClicked()) {
-                return $this->redirectToRoute('edit_event', ['id' => $form->get('events')->getViewData()]);
-            } elseif ($form->get('editMember')->isClicked()) {
-                return $this->redirectToRoute('edit_member', ['id' => $form->get('members')->getViewData()]);
-            } else {
-                throw new \Exception('This exception should never been thrown');
-            }
+        $chooseMemberForm = $this->createForm(ChooseMemberType::class);
+        $chooseMemberForm->handleRequest($request);
+        if ($chooseMemberForm->isSubmitted() && $chooseMemberForm->isValid()) {
+            return $this->redirectToRoute('edit_member', ['id' => $chooseMemberForm->get('members')->getViewData()]);
         }
 
         $sendEntriesForm = $this->createForm(SendEntriesType::class);
-
         $sendEntriesForm->handleRequest($request);
         if ($sendEntriesForm->isSubmitted() && $sendEntriesForm->isValid()) {
             if ($this->orisService->sendEntries(
@@ -54,7 +53,8 @@ class AdminController extends AbstractController
         }
 
         return $this->renderForm('admin/index.html.twig', [
-            'form' => $form,
+            'chooseEventForm' => $chooseEventForm,
+            'chooseMemberForm' => $chooseMemberForm,
             'sendEntriesForm' => $sendEntriesForm,
         ]);
     }
