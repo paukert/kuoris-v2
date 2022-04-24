@@ -10,7 +10,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrganizerRepository::class)]
-#[UniqueEntity('name')]
 class Organizer
 {
     #[ORM\Id]

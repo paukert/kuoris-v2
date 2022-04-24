@@ -59,7 +59,7 @@
                                 <a class="nav-link" href="{{ path('list_trainings') }}">Tréninky</a>
                             {% endif %}
                         </li>
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_TRAINER') %}
                             {% if app.request.attributes.get('_route') == 'app_admin' %}
                                 <a class="nav-link active" aria-current="page" href="#">Administrace</a>
                             {% elseif app.request.attributes.get('_route') in ['create_event', 'edit_event', 'edit_member'] %}
@@ -121,6 +121,15 @@
     <noscript>
         <div class="alert alert-warning">Prohlížeč nemá povolený JavaScript. Stránky nemusí fungovat dle očekávání.</div>
     </noscript>
+
+    {% if is_granted('IS_IMPERSONATOR') %}
+        <div class="alert alert-warning">
+            Aktuálně jsi přihlášen za jiného uživatele.
+            <a href="{{ impersonation_exit_path(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | merge(app.request.query.all))) }}">
+                Zpět do svého účtu.
+            </a>
+        </div>
+    {% endif %}
 
     {% for type, messages in app.flashes %}
         {% for message in messages %}

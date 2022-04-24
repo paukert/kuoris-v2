@@ -24,6 +24,8 @@ class MemberController extends AbstractController
     #[Route('/admin/members/{id}', name: 'edit_member')]
     public function edit(Member $member, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(MemberType::class, $member);
 
         $form->handleRequest($request);

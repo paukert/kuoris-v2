@@ -6,6 +6,7 @@ use App\Entity\Member;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ChooseMemberType extends AbstractType
@@ -22,6 +23,12 @@ class ChooseMemberType extends AbstractType
                         ->addOrderBy('m.firstName', 'ASC');
                 },
                 'placeholder' => 'Vyber člena',
+            ])
+            ->add('editMember', SubmitType::class, [
+                'label' => 'Upravit vybraného člena',
+            ])
+            ->add('loginAsMember', SubmitType::class, [
+                'label' => 'Přihlásit se jako vybraný člen',
             ]);
     }
 }

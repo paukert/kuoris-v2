@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\Type\ChooseEventType;
 use App\Form\Type\ChooseMemberType;
 use App\Form\Type\SendEntriesType;
+use App\Service\MemberService;
 use App\Service\OrisService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,17 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+    private MemberService $memberService;
     private OrisService $orisService;
 
-    public function __construct(OrisService $orisService)
+    public function __construct(MemberService $memberService, OrisService $orisService)
     {
+        $this->memberService = $memberService;
         $this->orisService = $orisService;
     }
 
     #[Route('/admin/', name: 'app_admin')]
     public function index(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_TRAINER');
 
         $chooseEventForm = $this->createForm(ChooseEventType::class);
         $chooseEventForm->handleRequest($request);
@@ -34,7 +37,14 @@ class AdminController extends AbstractController
         $chooseMemberForm = $this->createForm(ChooseMemberType::class);
         $chooseMemberForm->handleRequest($request);
         if ($chooseMemberForm->isSubmitted() && $chooseMemberForm->isValid()) {
-            return $this->redirectToRoute('edit_member', ['id' => $chooseMemberForm->get('members')->getViewData()]);
+            if ($chooseMemberForm->get('editMember')->isClicked()) {
+                return $this->redirectToRoute('edit_member', ['id' => $chooseMemberForm->get('members')->getViewData()]);
+            } elseif ($chooseMemberForm->get('loginAsMember')->isClicked()) {
+                $member = $this->memberService->getById($chooseMemberForm->get('members')->getViewData());
+                return $this->redirectToRoute('app_homepage', ['_switch_user' => $member->getRegistration()]);
+            } else {
+                throw new \Exception('This exception should never been thrown');
+            }
         }
 
         $sendEntriesForm = $this->createForm(SendEntriesType::class);
