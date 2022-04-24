@@ -18,6 +18,11 @@ class EventService
         $this->eventRepository = $eventRepository;
     }
 
+    public function getById(int $eventId): ?Event
+    {
+        return $this->eventRepository->find($eventId);
+    }
+
     /**
      * @return Event[]
      */

@@ -12,8 +12,18 @@
             <a href="{{ path('create_event', {'type': 'training'}) }}" class="btn-primary btn mb-2">Přidat nový trénink</a>
             <a href="{{ path('create_event', {'type': 'race'}) }}" class="btn-primary btn mb-2">Přidat nový závod</a>
         </div>
-        {{ form_row(form.members) }}
-        {{ form_widget(form.editMember) }}
+
+        <div class="mb-5">
+            {{ form_row(form.members) }}
+            {{ form_row(form.editMember) }}
+        </div>
         {{ form_end(form) }}
+
+        {{ form_start(sendEntriesForm) }}
+        {{ form_row(sendEntriesForm.racesInOris) }}
+        {{ form_row(sendEntriesForm.username) }}
+        {{ form_row(sendEntriesForm.password) }}
+        <button type="submit" class="btn-primary btn">Odeslat přihlášky</button>
+        {{ form_end(sendEntriesForm) }}
     </div>
 {% endblock %}

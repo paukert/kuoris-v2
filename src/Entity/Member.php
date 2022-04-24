@@ -86,6 +86,10 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Type(type: 'bool')]
     private $isActive = false;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\Type(type: 'integer')]
+    private $clubUserOrisId;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -362,6 +366,18 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
             return $this->getFirstName() . ' ' . $this->getLastName();
         }
         return null;
+    }
+
+    public function getClubUserOrisId(): ?int
+    {
+        return $this->clubUserOrisId;
+    }
+
+    public function setClubUserOrisId(?int $clubUserOrisId): self
+    {
+        $this->clubUserOrisId = $clubUserOrisId;
+
+        return $this;
     }
 
     public function __toString(): string

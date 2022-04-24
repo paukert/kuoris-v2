@@ -34,6 +34,11 @@ class Entry
     #[Assert\Type(type: 'bool')]
     private $car = false;
 
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    #[Assert\Type(type: 'bool')]
+    private $wasSentToOris = false;
+
     public function __construct(Event $event, Member $member)
     {
         $this->event = $event;
@@ -70,6 +75,18 @@ class Entry
     public function setCar(bool $car): self
     {
         $this->car = $car;
+
+        return $this;
+    }
+
+    public function getWasSentToOris(): ?bool
+    {
+        return $this->wasSentToOris;
+    }
+
+    public function setWasSentToOris(bool $wasSentToOris): self
+    {
+        $this->wasSentToOris = $wasSentToOris;
 
         return $this;
     }

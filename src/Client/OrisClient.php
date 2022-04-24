@@ -43,4 +43,23 @@ class OrisClient
 
         return $response['body'];
     }
+
+    public function sendEntry(array $parameters): bool
+    {
+        $url = self::BASE_URL . 'createEntry';
+
+        foreach ($parameters as $parameterName => $parameterValue) {
+            $url .= '&' . $parameterName . '=' . $parameterValue;
+        }
+
+        $response = $this->sendRequest(Request::METHOD_GET, $url);
+
+        if ($response['statusCode'] !== Response::HTTP_OK
+            || !isset($response['body']['Status'])
+            || $response['body']['Status'] !== 'OK') {
+            return false;
+        }
+
+        return true;
+    }
 }

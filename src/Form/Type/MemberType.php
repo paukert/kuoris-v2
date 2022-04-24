@@ -63,6 +63,10 @@ class MemberType extends AbstractType
                         'label' => 'Stav klubového konta',
                         'required' => false,
                     ])
+                    ->add('clubUserOrisId', IntegerType::class, [
+                        'label' => 'Klubové ORIS ID',
+                        'help' => 'Pozor nejedená se o „obyčejné“ ORIS ID uživatele, ale o klubové ORIS ID uživatele!',
+                    ])
                     ->add('isActive', CheckboxType::class, [
                         'label' => 'Povoleno přihlášení',
                         'required' => false,

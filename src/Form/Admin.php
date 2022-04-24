@@ -16,7 +16,7 @@ class Admin extends AbstractType
     {
         return $builder
             ->add('events', EntityType::class, [
-                'label' => 'Události',
+                'label' => 'Nadcházející události',
                 'class' => Event::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('e')
