@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% set closedEntries = event.entryDeadline < date('now') or event.isCancelled %}
-
 {% block title %}{{ event.name }}{% endblock %}
 
 {% block content %}
@@ -132,7 +130,7 @@
     </div>
 
     {{ form_start(entryForm) }}
-    <fieldset {{ closedEntries ? 'disabled' : '' }}>
+    <fieldset {{ is_granted('EDIT_ENTRY', event) ? '' : 'disabled' }}>
         {{ form_widget(entryForm) }}
         <button class="btn btn-primary" name="save" type="submit">{{ isNewEntry ? 'Přihlásit' : 'Upravit přihlášku' }}</button>
         {% if not isNewEntry %}

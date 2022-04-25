@@ -26,8 +26,6 @@ class AdminController extends AbstractController
     #[Route('/admin/', name: 'app_admin')]
     public function index(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_TRAINER');
-
         $chooseEventForm = $this->createForm(ChooseEventType::class);
         $chooseEventForm->handleRequest($request);
         if ($chooseEventForm->isSubmitted() && $chooseEventForm->isValid()) {
