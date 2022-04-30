@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Neznámá chyba{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Neznámá chyba</h1>
+
+        <p>Vyskytla se neznámá chyba :(</p>
+        <p><a href="{{ path('app_homepage') }}">Zpět na hlavní stránku.</a></p>
+    </div>
+{% endblock %}

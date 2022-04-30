@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Chyba 500{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Chyba 500</h1>
+
+        <p>Vnitřní chyba serveru, zkus požadavek zopakovat později :(</p>
+        <p><a href="{{ path('app_homepage') }}">Zpět na hlavní stránku.</a></p>
+    </div>
+{% endblock %}

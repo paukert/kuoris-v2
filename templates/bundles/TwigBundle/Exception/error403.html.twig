@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Chyba 403{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Chyba 403</h1>
+
+        <p>Přístup na požadovanou stránku byl zamítnut :(</p>
+        <p><a href="{{ path('app_homepage') }}">Zpět na hlavní stránku.</a></p>
+    </div>
+{% endblock %}
