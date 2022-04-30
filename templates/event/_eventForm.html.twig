@@ -15,14 +15,14 @@
 <div id="organizers" class="my-4 container-fluid"
      data-index="{{ form.organizers | length > 0 ? form.organizers | last.vars.name + 1 : 0 }}"
      data-prototype="{{ form_widget(form.organizers.vars.prototype) | e('html_attr') }}">
-    <div id="organizersHolder" class="row">
+    <div id="organizersHolder" class="row g-2">
         {% if form.organizers is empty %}
             {{ form_widget(form.organizers) }}
             <p class="px-0">Pokračuj přidáním nového organizátora</p>
         {% else %}
             {% for organizer in form.organizers %}
-                <div class="col-6 col-sm-4 col-md-3 border p-3 organizer">
-                    {{ form_widget(organizer) }}
+                <div class="col-12 col-sm-6 col-lg-4 organizer">
+                    {{ form_widget(organizer, {'attr': {'class': 'border p-3'}}) }}
                 </div>
             {% endfor %}
         {% endif %}
@@ -33,8 +33,8 @@
 {{ form_row(form.organizersInDatabase) }}
 
 <div class="mb-3">
-    <button id="addExistingOrganizer" class="btn btn-primary" type="button">Přidat vybraného organizátora</button>
-    <button id="addNewOrganizer" class="btn btn-primary" type="button">Přidat nového organizátora</button>
+    <button id="addExistingOrganizer" class="btn btn-primary mb-2" type="button">Přidat vybraného organizátora</button>
+    <button id="addNewOrganizer" class="btn btn-primary mb-2" type="button">Přidat nového organizátora</button>
 </div>
 
 <h2>Kategorie</h2>
@@ -42,14 +42,14 @@
 <div id="categories" class="my-4 container-fluid"
      data-index="{{ form.categories | length > 0 ? form.categories | last.vars.name + 1 : 0 }}"
      data-prototype="{{ form_widget(form.categories.vars.prototype) | e('html_attr') }}">
-    <div id="categoriesHolder" class="row">
+    <div id="categoriesHolder" class="row g-2">
         {% if form.categories is empty %}
             {{ form_widget(form.categories) }}
             <p class="px-0">Pokračuj přidáním nové kategorie</p>
         {% else %}
             {% for category in form.categories %}
-                <div class="col-6 col-sm-4 col-md-3 col-xl-2 border p-3 category">
-                    {{ form_widget(category) }}
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2 category">
+                    {{ form_widget(category, {'attr': {'class': 'border p-3'}}) }}
                 </div>
             {% endfor %}
         {% endif %}
@@ -60,8 +60,8 @@
 {{ form_row(form.categoriesInDatabase) }}
 
 <div class="mb-3">
-    <button id="addExistingCategory" class="btn btn-primary" type="button">Přidat vybranou kategorii</button>
-    <button id="addNewCategory" class="btn btn-primary" type="button">Přidat novou kategorii</button>
+    <button id="addExistingCategory" class="btn btn-primary mb-2" type="button">Přidat vybranou kategorii</button>
+    <button id="addNewCategory" class="btn btn-primary mb-2" type="button">Přidat novou kategorii</button>
 </div>
 
 <h2>Doplňující informace</h2>

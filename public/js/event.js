@@ -1,10 +1,12 @@
 const addNewField = (items, itemsHolder, itemsSelect, groupName, addSelectedValue) => {
     let item = document.createElement('div');
-    item.classList.add('col-6', 'col-sm-4', 'col-md-3', 'border', 'p-3');
     if (groupName === 'categories') {
-        item.classList.add('col-xl-2');
+        item.classList.add('col-6', 'col-sm-4', 'col-md-3', 'col-xl-2');
+    } else {
+        item.classList.add('col-12', 'col-sm-6', 'col-lg-4');
     }
     item.innerHTML = items.dataset.prototype.replace(/__name__/g, items.dataset.index);
+    item.firstElementChild.classList.add('border', 'p-3');
 
     if (addSelectedValue) {
         let input = item.getElementsByTagName('input').item(0);
@@ -23,7 +25,7 @@ const addNewField = (items, itemsHolder, itemsSelect, groupName, addSelectedValu
 const addXMark = (item) => {
     const xMark = document.createElement('a');
     xMark.setAttribute('href', '#');
-    xMark.classList.add('float-end');
+    xMark.classList.add('float-end', 'p-3');
     xMark.innerHTML = '<span class="fa-solid fa-xmark text-danger pe-1"></span>';
 
     xMark.addEventListener('click', (e) => {
