@@ -23,6 +23,9 @@ class RepeatedPasswordType extends AbstractType
             'second_options' => [
                 'label' => 'Kontrola hesla',
             ],
+            'options' => [
+                'attr' => ['minlength' => 5]
+            ],
             'constraints' => [
                 new Length(min: 5, minMessage: 'Heslo musí být minimálně {{ limit }} znaků dlouhé.'),
             ],

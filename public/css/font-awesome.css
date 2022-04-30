@@ -59,3 +59,11 @@
 .fa-xmark::before {
     content: "\f00d";
 }
+
+.fa-gear::before {
+    content: "\f013";
+}
+
+.fa-right-from-bracket::before {
+    content: "\f2f5";
+}

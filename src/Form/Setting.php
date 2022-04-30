@@ -3,14 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Member;
+use App\Form\Type\RepeatedPasswordType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 
 class Setting extends AbstractType
 {
@@ -20,16 +18,8 @@ class Setting extends AbstractType
             ->add('mail', EmailType::class, [
                 'label' => 'E-mail',
             ])
-            ->add('plaintextPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Zadaná hesla se neshodují.',
+            ->add('plaintextPassword', RepeatedPasswordType::class, [
                 'required' => false,
-                'mapped' => false,
-                'first_options' => ['label' => 'Heslo'],
-                'second_options' => ['label' => 'Kontrola hesla'],
-                'constraints' => [
-                    new Length(min: 5, minMessage: 'Heslo musí být minimálně {{ limit }} znaků dlouhé.'),
-                ],
             ])
             ->add('sendNotification', CheckboxType::class, [
                 'label' => 'Zasílat oznámení při přidání nové události',
