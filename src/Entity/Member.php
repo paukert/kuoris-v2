@@ -50,9 +50,10 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Type(type: 'string')]
     private $lastName;
 
-    #[ORM\Column(type: 'string', length: 200, nullable: true)]
+    #[ORM\Column(type: 'string', length: 200)]
     #[Assert\Email]
     #[Assert\Length(max: 200)]
+    #[Assert\NotBlank]
     #[Assert\Type(type: 'string')]
     private $mail;
 
