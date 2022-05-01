@@ -110,6 +110,13 @@ class EventController extends AbstractController
         ]);
     }
 
+    #[Route('/races/checkAndFixDeadlines', name: 'check_and_fix_deadlines')]
+    public function checkAndFixDeadlines(): Response
+    {
+        $this->orisService->checkAndFixDeadlines();
+        return new Response('Datum uzávěrky přihlášek bylo zkontrolováno u všech nadcházejících závodů s vyplněným ORIS ID a povolenou automatickou kontrolou.');
+    }
+
     #[Route('/events/{id}', name: 'event_detail')]
     public function detail(Event $event, Request $request): Response
     {

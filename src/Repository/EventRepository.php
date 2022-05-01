@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Event;
+use App\Entity\Race;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -61,5 +62,16 @@ class EventRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery();
+    }
+
+    public function findRemotestRace(): ?Event
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e INSTANCE OF :class')
+            ->setParameter('class', $this->getEntityManager()->getClassMetadata(Race::class))
+            ->orderBy('e.date', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -41,4 +41,9 @@ class EventService
         $this->entityManager->persist($event);
         $this->entityManager->flush();
     }
+
+    public function getRemotestRace(): ?Event
+    {
+        return $this->eventRepository->findRemotestRace();
+    }
 }

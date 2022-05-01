@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Client\OrisClient;
 use App\Entity\Event;
+use App\Entity\Race;
 use App\Mapper\OrisMapper;
+use DateTime;
 
 class OrisService
 {
@@ -27,7 +29,7 @@ class OrisService
     {
         $eventData = $this->orisClient->getRaceData($orisId);
 
-        if (!$eventData || $eventData['Status'] !== 'OK') {
+        if ($eventData === null) {
             return null;
         }
 
@@ -62,5 +64,39 @@ class OrisService
             usleep(self::DELAY_BETWEEN_REQUESTS);
         }
         return true;
+    }
+
+    // TODO: send notification to administrators about changes
+    public function checkAndFixDeadlines(): void
+    {
+        $remotestRace = $this->eventService->getRemotestRace();
+        $orisRaces = $this->orisClient->getListOfEvents($remotestRace->getDate()->format('Y-m-d'));
+
+        /** @var Race[] $races */
+        $races = $this->eventService->getEventsWithNearestDeadline(Race::class, PHP_INT_MAX);
+
+        foreach ($races as $race) {
+            if ($race->getOrisId() === null || $race->getAutoUpdate() === false) {
+                continue;
+            }
+
+            $eventName = 'Event_' . $race->getOrisId();
+            $deadline = $orisRaces['Data'][$eventName]['EntryDate1'] ?? null;
+
+            if ($deadline === null) {
+                continue;
+            }
+
+            try {
+                $kuorisDeadline = (new DateTime($deadline))->modify('- 1 day');
+            } catch (\Exception) {
+                $kuorisDeadline = null;
+            }
+
+            if ($kuorisDeadline !== null && $kuorisDeadline < $race->getEntryDeadline()) {
+                $race->setEntryDeadline($kuorisDeadline);
+                $this->eventService->save($race);
+            }
+        }
     }
 }
