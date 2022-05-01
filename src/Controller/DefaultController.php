@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Race;
 use App\Entity\Training;
+use App\Service\CommentService;
 use App\Service\EventService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,10 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
+    private CommentService $commentService;
     private EventService $eventService;
 
-    public function __construct(EventService $eventService)
+    public function __construct(CommentService $commentService, EventService $eventService)
     {
+        $this->commentService = $commentService;
         $this->eventService = $eventService;
     }
 
@@ -32,9 +35,11 @@ class DefaultController extends AbstractController
     {
         $races = $this->eventService->getEventsWithNearestDeadline(Race::class);
         $trainings = $this->eventService->getEventsWithNearestDeadline(Training::class, 3);
+        $comments = $this->commentService->getRecentComments(3);
         return $this->render('index.html.twig', [
             'races' => $races,
             'trainings' => $trainings,
+            'comments' => $comments,
         ]);
     }
 }

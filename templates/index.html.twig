@@ -29,6 +29,29 @@
             </div>
         {% endif %}
     {% endif %}
+    <h2 class="mb-3">Nejnovější komentáře</h2>
+    {% if comments is empty %}
+        <p>Nikdo zatím nepřidal žádný komentář.</p>
+    {% else %}
+        {% for comment in comments %}
+            <div class="mb-2">
+                <div>
+                    <span class="fw-bolder">{{ comment.member.name }}</span>
+                    napsal(a) komentář u události
+                    <span class="fw-bolder"><a href="{{ path('event_detail', { id: comment.event.id, '_fragment': 'comments' })}}">{{ comment.event.name }}</a></span>
+                </div>
+                <div class="fst-italic">{{ comment.createdAt | date('d. m. Y H:i') }}</div>
+                <div>
+                    {{ comment.text }}
+                    {% if comment.updatedAt is not null %}
+                        <span class="edited" title="Naposledy upraven: {{ comment.updatedAt | date('d. m. Y H:i') }}">
+                            (upraven)
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

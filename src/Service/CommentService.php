@@ -28,6 +28,14 @@ class CommentService
         return $this->commentRepository->find($commentId);
     }
 
+    /**
+     * @return Comment[]
+     */
+    public function getRecentComments(int $maxResults): array
+    {
+        return $this->commentRepository->findBy([], ['createdAt' => 'DESC'], $maxResults);
+    }
+
     public function isManaged(Comment $comment): bool
     {
         return $this->entityManager->contains($comment);
