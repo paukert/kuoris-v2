@@ -6,6 +6,7 @@ use App\Entity\Member;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,6 +20,7 @@ class ChooseMemberType extends AbstractType
                 'class' => Member::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('m')
+                        ->where('NOT m.firstName = \'Anonymizovaný\' AND NOT m.lastName = \'uživatel\'')
                         ->addOrderBy('m.lastName', 'ASC')
                         ->addOrderBy('m.firstName', 'ASC');
                 },
@@ -29,6 +31,9 @@ class ChooseMemberType extends AbstractType
             ])
             ->add('loginAsMember', SubmitType::class, [
                 'label' => 'Přihlásit se jako vybraný člen',
+            ])
+            ->add('anonymizeMember', ButtonType::class, [
+                'label' => 'Anonymizovat vybraného člena',
             ]);
     }
 }

@@ -3,24 +3,45 @@
 {% block title %}Administrace{% endblock %}
 
 {% block content %}
+    <div class="modal fade" id="anonymizeMemberModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Potvrzení</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zrušit"></button>
+                </div>
+                <div class="modal-body">Opravdu chceš anonymizovat člena?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zrušit</button>
+                    <button type="button" class="btn btn-danger" id="anonymizeMemberConfirmBtn">Anonymizovat člena</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="max-width-800">
         <h1 class="mb-3 text-center">Administrace</h1>
         <h2>Správa událostí</h2>
         <section class="mb-4">
             {{ form_start(chooseEventForm) }}
             {{ form_row(chooseEventForm.events) }}
-            <button type="submit" class="btn-primary btn mb-2">Upravit vybranou událost</button>
-            <a href="{{ path('create_event', {'type': 'training'}) }}" class="btn-primary btn mb-2">Přidat nový trénink</a>
-            <a href="{{ path('create_event', {'type': 'race'}) }}" class="btn-primary btn mb-2">Přidat nový závod</a>
+            <div class="d-grid gap-2 d-lg-block">
+                <button type="submit" class="btn btn-primary">Upravit vybranou událost</button>
+                <a href="{{ path('create_event', {'type': 'training'}) }}" class="btn btn-primary">Přidat nový trénink</a>
+                <a href="{{ path('create_event', {'type': 'race'}) }}" class="btn btn-primary">Přidat nový závod</a>
+            </div>
             {{ form_end(chooseEventForm) }}
         </section>
         {% if is_granted('ROLE_ADMIN') %}
             <h2>Správa členů</h2>
             <section class="mb-4">
-                {{ form_start(chooseMemberForm) }}
+                {{ form_start(chooseMemberForm, {'attr': {'id': 'chooseMemberForm'}}) }}
                 {{ form_row(chooseMemberForm.members) }}
-                {{ form_widget(chooseMemberForm.editMember, {'attr': {'class': 'btn-primary btn mb-2'}}) }}
-                {{ form_widget(chooseMemberForm.loginAsMember, {'attr': {'class': 'btn-primary btn mb-2'}}) }}
+                <div class="d-grid gap-2 d-lg-block">
+                    {{ form_widget(chooseMemberForm.editMember, {'attr': {'class': 'btn btn-primary'}}) }}
+                    {{ form_widget(chooseMemberForm.loginAsMember, {'attr': {'class': 'btn btn-primary'}}) }}
+                    {{ form_widget(chooseMemberForm.anonymizeMember, {'id': 'anonymizeMemberBtn', 'attr': {'class': 'btn btn-danger'}}) }}
+                </div>
                 {{ form_end(chooseMemberForm) }}
             </section>
         {% endif %}
@@ -30,8 +51,14 @@
             {{ form_row(sendEntriesForm.racesInOris) }}
             {{ form_row(sendEntriesForm.username) }}
             {{ form_row(sendEntriesForm.password) }}
-            <button type="submit" class="btn-primary btn">Odeslat přihlášky</button>
+            <div class="d-grid gap-2 d-lg-block">
+                <button type="submit" class="btn btn-primary">Odeslat přihlášky</button>
+            </div>
             {{ form_end(sendEntriesForm) }}
         </section>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('js/admin.js') }}" defer></script>
 {% endblock %}

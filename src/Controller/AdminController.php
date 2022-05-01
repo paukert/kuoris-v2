@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Member;
 use App\Form\Type\ChooseEventType;
 use App\Form\Type\ChooseMemberType;
 use App\Form\Type\SendEntriesType;
@@ -35,7 +36,15 @@ class AdminController extends AbstractController
         $chooseMemberForm = $this->createForm(ChooseMemberType::class);
         $chooseMemberForm->handleRequest($request);
         if ($chooseMemberForm->isSubmitted() && $chooseMemberForm->isValid()) {
-            if ($chooseMemberForm->get('editMember')->isClicked()) {
+            $this->denyAccessUnlessGranted(Member::ROLE_ADMIN);
+            if (isset($request->request->get('choose_member')['anonymizeMember'])) {
+                if ($this->memberService->anonymizeMember($chooseMemberForm->get('members')->getViewData())) {
+                    $this->addFlash('success', 'Anonymizace člena proběhla úspěšně.');
+                } else {
+                    $this->addFlash('danger', 'Při anonymizaci člena došlo k neznámé chybě.');
+                }
+                return $this->redirectToRoute('app_admin');
+            } elseif ($chooseMemberForm->get('editMember')->isClicked()) {
                 return $this->redirectToRoute('edit_member', ['id' => $chooseMemberForm->get('members')->getViewData()]);
             } elseif ($chooseMemberForm->get('loginAsMember')->isClicked()) {
                 $member = $this->memberService->getById($chooseMemberForm->get('members')->getViewData());
