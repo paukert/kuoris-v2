@@ -3,11 +3,14 @@
 Text bakalářské práce je v samostatném repozitáři: https://github.com/paukert/fit-ctu-bachelors-thesis
 
 ## Požadavky
-- stáhnout a nainstalovat [docker](https://www.docker.com/get-started) a [docker-compose](https://docs.docker.com/compose/)
+- stáhnout a nainstalovat [Docker](https://www.docker.com/get-started) a [Docker Compose](https://docs.docker.com/compose/)
 
 ## Konfigurace
-- vytvořit a spustit kontejnery `docker-compose up -d --build`
-- instalace závislostí (pomocí nástroje Composer) proběhne automaticky (v případě problémů lze spustit ručně pomocí `docker-compose exec php php composer install`)
-- spuštění migrací proběhne také automaticky (v případě problémů lze spustit ručně pomocí `docker-compose exec php php bin/console doctrine:migrations:migrate`)
+- sestavit kontejnery příkazem `docker-compose build --pull --no-cache`
+    - instalace závislostí pomocí balíčkovacího systému Composer proběhne automaticky (v případě potřeby lze spustit i pomocí `docker-compose exec php php composer install`)
+- spustit kontejnery pomocí příkazu `docker-compose up -d`
+    - databázové migrace se spustí také automaticky (případně je lze spustit i ručně pomocí `docker-compose exec php php bin/console doctrine:migrations:migrate`)
     - v rámci migrací bude do databáze vložen administrátor se jménem `KUO9801` a heslem `KUO9801` a i několik dat pro číselníky disciplín a úrovní
-- testovací data lze vygenerovat pomocí `docker-compose exec php php bin/console doctrine:fixtures:load --append`
+- testovací data obsahující další členy a události včetně přihlášek lze vygenerovat pomocí příkazu `docker-compose exec php php bin/console doctrine:fixtures:load --append`
+- po provedení výše uvedených kroků bude systém dostupný na adrese `https://localhost/`
+- všechny kontejnery lze naopak zastavit pomocí `docker-compose down --remove-orphans`
