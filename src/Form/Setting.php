@@ -20,11 +20,11 @@ class Setting extends AbstractType
             ])
             ->add('plaintextPassword', RepeatedPasswordType::class, [
                 'required' => false,
-            ])
-            ->add('sendNotification', CheckboxType::class, [
-                'label' => 'Zasílat oznámení při přidání nové události',
-                'required' => false,
             ]);
+//            ->add('sendNotification', CheckboxType::class, [
+//                'label' => 'Zasílat oznámení při přidání nové události',
+//                'required' => false,
+//            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
