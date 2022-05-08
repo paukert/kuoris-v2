@@ -15,6 +15,7 @@
         "knplabs/knp-paginator-bundle": "^5.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^6.1",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",
@@ -59,6 +60,9 @@
         "zenstruck/foundry": "^1.16"
     },
     "config": {
+        "platform": {
+            "php": "8.0.1"
+        },
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"
