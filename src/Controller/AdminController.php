@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Member;
+use App\Form\Type\ChooseAnnouncementType;
 use App\Form\Type\ChooseEventType;
 use App\Form\Type\ChooseMemberType;
 use App\Form\Type\SendEntriesType;
+use App\Service\AnnouncementService;
 use App\Service\MemberService;
 use App\Service\OrisService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,11 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+    private AnnouncementService $announcementService;
     private MemberService $memberService;
     private OrisService $orisService;
 
-    public function __construct(MemberService $memberService, OrisService $orisService)
+    public function __construct(AnnouncementService $announcementService, MemberService $memberService, OrisService $orisService)
     {
+        $this->announcementService = $announcementService;
         $this->memberService = $memberService;
         $this->orisService = $orisService;
     }
@@ -69,7 +73,14 @@ class AdminController extends AbstractController
             $this->redirectToRoute('app_admin');
         }
 
+        $chooseAnnouncementForm = $this->createForm(ChooseAnnouncementType::class, null, ['announcements' => $this->announcementService->getEditableAnnouncements()]);
+        $chooseAnnouncementForm->handleRequest($request);
+        if ($chooseAnnouncementForm->isSubmitted() && $chooseAnnouncementForm->isValid()) {
+            return $this->redirectToRoute('edit_announcement', ['id' => $chooseAnnouncementForm->get('announcements')->getViewData()]);
+        }
+
         return $this->renderForm('admin/index.html.twig', [
+            'chooseAnnouncementForm' => $chooseAnnouncementForm,
             'chooseEventForm' => $chooseEventForm,
             'chooseMemberForm' => $chooseMemberForm,
             'sendEntriesForm' => $sendEntriesForm,

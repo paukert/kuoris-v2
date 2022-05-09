@@ -3,6 +3,23 @@
 {% block title %}Přehled{% endblock %}
 
 {% block content %}
+    {% if announcements is not empty %}
+        <div class="alert alert-warning container-fluid">
+            {% for announcement in announcements %}
+                <article class="row mb-2">
+                    <span class="col-xxl-2 col-lg-3 col-md-4">
+                        <div class="fw-bolder">{{ announcement.member.name }}</div>
+                        <div class="fst-italic">{{ announcement.publishedAt | date('d. m. Y H:i') }}</div>
+                    </span>
+                    <span class="col-md">
+                        <span class="fw-bolder">{{ announcement.headline }}</span>
+                        {{ announcement.text }}
+                    </span>
+                </article>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% if races is empty and trainings is empty %}
         <p class="no-events">V&nbsp;systému není evidovaný žádný závod ani&nbsp;trénink s&nbsp;nadcházejícím datem uzávěrky přihlášek</p>
     {% else %}

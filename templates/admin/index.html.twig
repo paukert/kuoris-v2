@@ -45,6 +45,16 @@
                 {{ form_end(chooseMemberForm) }}
             </section>
         {% endif %}
+        <h2>Správa oznámení</h2>
+        <section class="mb-4">
+            {{ form_start(chooseAnnouncementForm) }}
+            {{ form_row(chooseAnnouncementForm.announcements) }}
+            <div class="d-grid gap-2 d-lg-block">
+                <button type="submit" class="btn btn-primary">Upravit vybrané oznámení</button>
+                <a href="{{ path('create_announcement') }}" class="btn btn-primary">Přidat nové oznámení</a>
+            </div>
+            {{ form_end(chooseAnnouncementForm) }}
+        </section>
         <h2>Synchronizace s IS ORIS</h2>
         <section class="mb-4">
             {{ form_start(sendEntriesForm) }}

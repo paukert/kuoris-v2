@@ -30,7 +30,12 @@ class Announcement
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotBlank]
     #[Assert\Type(type: DateTime::class)]
-    private $createdAt;
+    private $publishedAt;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Assert\NotNull]
+    #[Assert\Type(type: 'bool')]
+    private $isVisible = true;
 
     #[ORM\ManyToOne(targetEntity: Member::class, inversedBy: 'announcements')]
     #[ORM\JoinColumn(nullable: false)]
@@ -38,9 +43,10 @@ class Announcement
     #[Assert\Type(type: Member::class)]
     private $member;
 
-    public function __construct()
+    public function __construct(Member $member)
     {
-        $this->createdAt = new DateTime();
+        $this->member = $member;
+        $this->publishedAt = new DateTime();
     }
 
     public function getId(): ?int
@@ -72,14 +78,26 @@ class Announcement
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getPublishedAt(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->publishedAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
     {
-        $this->createdAt = $createdAt;
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }
@@ -94,5 +112,10 @@ class Announcement
         $this->member = $member;
 
         return $this;
+    }
+
+    public function getLabel(): string
+    {
+        return mb_strimwidth($this->getPublishedAt()->format('Y-m-d') . ' – ' . $this->getHeadline(), 0, 75, '...');
     }
 }
