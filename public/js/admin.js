@@ -17,6 +17,6 @@ anonymizeMemberBtn.addEventListener('click', (e) => {
 });
 
 anonymizeMemberConfirmBtn.addEventListener('click', () => {
-    anonymizeMemberBtn.setAttribute('type', 'submit');
-    chooseMemberForm.requestSubmit(anonymizeMemberBtn);
+    anonymizeMemberBtn.type = 'submit';
+    anonymizeMemberBtn.click();
 });
