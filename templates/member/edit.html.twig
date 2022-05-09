@@ -7,7 +7,9 @@
         <h1 class="mb-3 text-center">Úprava člena</h1>
         {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button class="btn btn-primary" type="submit">Uložit změny</button>
+        <div class="d-grid d-md-block">
+            <button class="btn btn-primary" type="submit">Uložit změny</button>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}

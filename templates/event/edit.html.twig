@@ -8,7 +8,9 @@
     {% include 'event/_eventForm.html.twig' with {
         'form': form
     } only %}
-    <button class="btn btn-primary" type="submit">Upravit událost</button>
+    <div class="d-grid d-md-block">
+        <button class="btn btn-primary" type="submit">Upravit událost</button>
+    </div>
     {{ form_end(form) }}
 {% endblock %}
 

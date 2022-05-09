@@ -7,12 +7,12 @@
         <div class="row justify-content-center mb-5">
             <img src="{{ asset('img/logo.svg') }}" class="col-md-6 col-9" alt="Logo">
         </div>
-        <div class="row my-3">
+        <div class="row mt-3 mb-4">
             <h1 class="text-center">Klubový informační systém pro&nbsp;přihlašování na&nbsp;události</h1>
         </div>
-        <div class="row justify-content-center">
-            <a href="{{ path('app_login') }}" class="btn btn-primary py-2 mx-4 my-2 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6">Přihlášení</a>
-            <a href="{{ path('app_registration') }}" class="btn btn-primary py-2 mx-4 my-2 col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6">Registrace</a>
+        <div class="row justify-content-center gap-2">
+            <a href="{{ path('app_login') }}" class="btn btn-primary py-2 col-xl-2 col-lg-3 col-md-4">Přihlášení</a>
+            <a href="{{ path('app_registration') }}" class="btn btn-primary py-2 col-xl-2 col-lg-3 col-md-4">Registrace</a>
         </div>
     </div>
 {% endblock %}
