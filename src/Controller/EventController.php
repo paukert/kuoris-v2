@@ -213,31 +213,29 @@ class EventController extends AbstractController
 
     /**
      * Use already persisted entities in database to avoid duplicity records
-     *
-     * TODO rework
      */
     private function fixSubmittedData(Event &$event): void
     {
-        $persistedOrganizers = $this->organizerService->getAll();
         $organizers = $event->getOrganizers();
         foreach ($organizers as $organizer) {
-            foreach ($persistedOrganizers as $persistedOrganizer) {
-                if ($organizer->getName() === $persistedOrganizer->getName()) {
-                    $event->removeOrganizer($organizer);
-                    $event->addOrganizer($persistedOrganizer);
-                }
+            $persistedOrganizer = $this->organizerService->getOneBy(['name' => $organizer->getName()]);
+            if ($persistedOrganizer !== null) {
+                $event->removeOrganizer($organizer);
+                $event->addOrganizer($persistedOrganizer);
+                $this->organizerService->remove($organizer);
             }
         }
 
-        $persistedCategories = $this->categoryService->getAll();
         $categories = $event->getCategories();
         foreach ($categories as $category) {
-            foreach ($persistedCategories as $persistedCategory) {
-                if ($category->getName() === $persistedCategory->getName()
-                    && $category->getOrisId() === $persistedCategory->getOrisId()) {
-                    $event->removeCategory($category);
-                    $event->addCategory($persistedCategory);
-                }
+            $persistedCategory = $this->categoryService->getOneBy([
+                'name' => $category->getName(),
+                'orisId' => $category->getOrisId()
+            ]);
+            if ($persistedCategory !== null) {
+                $event->removeCategory($category);
+                $event->addCategory($persistedCategory);
+                $this->categoryService->remove($category);
             }
         }
     }

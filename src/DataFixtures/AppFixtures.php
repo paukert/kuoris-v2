@@ -53,7 +53,7 @@ class AppFixtures extends Fixture
 
         // Add announcements
         AnnouncementFactory::createMany(
-            5,
+            2,
             fn() => [
                 'member' => MemberFactory::random()
             ]

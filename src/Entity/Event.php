@@ -59,7 +59,7 @@ abstract class Event
     private $discipline;
 
     #[ORM\ManyToMany(targetEntity: Organizer::class, inversedBy: 'events', cascade: ['persist'])]
-    #[Assert\Count(min: 1)]
+    #[Assert\Count(min: 1, minMessage: 'Událost musí mít přiřazeného alespoň jednoho ogranizátora.')]
     #[Assert\Type(type: Collection::class)]
     #[Assert\Valid]
     private $organizers;
@@ -74,6 +74,7 @@ abstract class Event
 
     #[ORM\ManyToMany(targetEntity: Category::class, cascade: ['persist'])]
     #[ORM\OrderBy(['name' => 'ASC'])]
+    #[Assert\Count(min: 1, minMessage: 'Událost musí mít přiřazenou alespoň jednu kategorii.')]
     #[Assert\Type(type: Collection::class)]
     #[Assert\Valid]
     private $categories;
