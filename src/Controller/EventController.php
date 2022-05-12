@@ -110,6 +110,9 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * Cron has to be run with URL on webhosting
+     */
     #[Route('/races/checkAndFixDeadlines', name: 'check_and_fix_deadlines')]
     public function checkAndFixDeadlines(): Response
     {

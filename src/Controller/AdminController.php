@@ -68,7 +68,7 @@ class AdminController extends AbstractController
             )) {
                 $this->addFlash('success', 'Přihlášky byly do IS ORIS úspěšně odeslány.');
             } else {
-                $this->addFlash('danger', 'Při odesílání přihlášek nastala chyba. Kontaktuj administrátora systému.');
+                $this->addFlash('danger', 'Při odesílání přihlášek nastala chyba. Přihlašovací údaje nejsou platné nebo nastala jiná chyba.');
             }
             $this->redirectToRoute('app_admin');
         }
