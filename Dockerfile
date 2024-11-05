@@ -78,7 +78,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 
 VOLUME /var/run/php
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.6.6 /usr/bin/composer /usr/bin/composer
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
